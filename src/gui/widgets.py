@@ -18,9 +18,13 @@ from src.gui.Buttons import (
     BTNMinMax
     
 )
-from src.gui.menuBar import ToolBarHeader
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWebEngineWidgets import QWebEngineView
+
+from src.gui.menuBar import ToolBarHeader
+
 from src.data.paths import GUI_IMGS       
+
 
 class form(QWidget):
     '''

@@ -1,5 +1,6 @@
 from src.gui.Buttons import BTNMenu
 from src.gui.widgets import form
+from src.gui.html_viewer import UltimateMD
 from PyQt6.QtWidgets import (
     QApplication
 
@@ -27,10 +28,17 @@ if __name__ == "__main__":
     $$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
 
     """
+    latex_content = """
+    $x+4/3 = 0$
+    """
     import sys
+    import src.gui.md2_viewer as view
     app = QApplication(sys.argv)
-    btn = form()   
-    
+    btn = form() 
+    btn.setFixedSize(500,800)      
+    viewer = UltimateMD(markdown_content)
+    btn.setCenterWidget(viewer)
+    viewer.show()
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
     app.setStyleSheet(file.read())
     app.exec()
