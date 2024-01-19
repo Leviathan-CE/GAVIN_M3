@@ -1,6 +1,5 @@
 from src.gui.Buttons import BTNMenu
 from src.gui.widgets import form
-from src.gui.html_viewer import UltimateMD
 from PyQt6.QtWidgets import (
     QApplication
 
@@ -32,7 +31,8 @@ if __name__ == "__main__":
     $x+4/3 = 0$
     """
     import sys
-    import src.gui.md2_viewer as view
+    import src.wip.md2_viewer as view
+    from src.wip.html_viewer import UltimateMD
     app = QApplication(sys.argv)
     btn = form() 
     btn.setFixedSize(500,800)      
