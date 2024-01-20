@@ -8,7 +8,7 @@ import io
 import re
 
 
-class UltimateMD(QWidget):
+class UltimateMD3(QWidget):
     def __init__(self, content: str):
         super().__init__()
 
@@ -29,8 +29,11 @@ class UltimateMD(QWidget):
             print(block)
             # If the block is even, it's a Markdown block
             if i % 2 == 0:
-                textedit = QTextEdit(self)    
-                textedit.setMarkdown(block)
+                print("hi")
+                textedit = QWebEngineView(self) 
+                html = markdown2.markdown(block)
+                print(html)
+                textedit.setHtml(html)
                 layout.addWidget(textedit)
        
 
@@ -59,29 +62,28 @@ class UltimateMD(QWidget):
 
 
 if __name__ == "__main__":
-    app = QApplication([])  # sys.argv
+    app = QApplication(sys.argv)  # sys.argv
 
     # Your content
     markdown_content = """
-    This is an inline math example $e^{i\\pi} + 1 = 0$ 
+This is an inline math example $e^{i\\pi} + 1 = 0$ 
 
-    # hi lo
+# hi lo
 
-    This is a code block with syntax highlighting:
+This is a code block with syntax highlighting:
 
-    ```Java
-
+```Java
     public void hello_world(){
         print("Hello, world!");
         }
 
     hello_world();
-    ```
-    And this is a displayed math example:
+```
+And this is a displayed math example:
 
-    $$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
+$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
     """
 
-    u = UltimateMD(content=markdown_content)
+    u = UltimateMD3(content=markdown_content)
     u.show()
     sys.exit(app.exec())

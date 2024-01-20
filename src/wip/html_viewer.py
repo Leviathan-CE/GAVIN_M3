@@ -14,15 +14,11 @@ import sys
 
 
 #why this works on its own and not when i attach to to another widget is beyond me but somthing is amiss
-markdown_content = """
-This is an inline math example $e^{i\\pi} + 1 = 0$ 
-
+markdown_content = r"""This is an inline math example $e^{i\pi} + 1 = 0$ 
 # hi lo
-
 This is a code block with syntax highlighting:
 
 ```Java
-
 public void hello_world(){
     print("Hello, world!");
     }
@@ -30,14 +26,13 @@ public void hello_world(){
 hello_world();
 ```
 And this is a displayed math example:
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$ 
 
-$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
-
-\\[sum_{i=1}^{n} i = \\frac{n(n+1)}{2}\\]
+\[\sum_{i=1}^{n} i = \frac{n(n+1)}{2}\]
 
 """
 
-class UltimateMD(QWebEngineView):
+class UltimateMD(QTextBrowser):
    html_template_code = """
 <!DOCTYPE html>
 <html>
@@ -76,13 +71,12 @@ MathJax.Hub.Config({{
        self.setObjectName("md")
        
        # Convert the markdown to HTML
-       html_content = markdown.markdown(
-           content, extensions=['fenced_code', 'codehilite'])
-       # Create the HTML template that includes the MathJax and Highlight.js libraries
-       full_html = UltimateMD.html_template_code.format(content=UltimateMD.html_template_math.format(content=html_content))
+    #    html_content = markdown.markdown(
+    #        content, extensions=['fenced_code', 'codehilite'])
+    #    # Create the HTML template that includes the MathJax and Highlight.js libraries
+    #    full_html = UltimateMD.html_template_code.format(content=UltimateMD.html_template_math.format(content=html_content))
        # Create QWebEngineView instance        
-       self.setHtml(full_html)      
-       self.page().runJavaScript(full_html)       
+       self.setMarkdown(content)            
        self.show()
        
 
@@ -109,12 +103,10 @@ class UltimateMD_allinone(QWebEngineView):
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
-            }},
-            jax: ["input/TeX", "output/HTML-CSS"],
-            "HTML-CSS": {{ availableFonts: ["TeX"] }}
+            }}
         }});
         </script>
-        <script type="text/javascript" async src="C:/Users/Levi/Desktop/GAVIN_M3/src/gui/js/MathJax-2.7.7/MathJax.js"></script>
+        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
         </head>
         <body>
         <div>
@@ -144,7 +136,7 @@ if __name__ == "__main__":
     vb = QVBoxLayout()
     form.setLayout(vb)
     u = UltimateMD_allinone(content=markdown_content)
-    ub = UltimateMD_allinone(content=markdown_content)
+    ub = UltimateMD(content=markdown_content)
     form.layout().addWidget(u)
     form.layout().addWidget(ub)
    

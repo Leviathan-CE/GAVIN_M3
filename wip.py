@@ -69,13 +69,15 @@ hello_world();
 
     import sys
     import src.wip.md2_viewer as view
+    from src.wip.md_filereader import MarkdownLatexViewer
     from src.wip.html_viewer import UltimateMD, UltimateMD_allinone
     app = QApplication(sys.argv)
     btn = Form()
     
     btn.setFixedSize(500,800)      
-    viewer = UltimateMD_allinone(markdown_content)
-    print(viewer.html)
+    viewer = MarkdownLatexViewer(
+        r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
+    
     #print(f"afterall::::: {viewer._init_html(markdown_content)}")
    # viewer.setHtml(latex_content)
     #btn.setCenterWidget(viewer)
