@@ -25,6 +25,15 @@ from src.gui.menuBar import ToolBarHeader
 
 from src.data.paths import GUI_IMGS       
 
+class Form(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.outterLayout = QVBoxLayout(self)
+        self.wdg_header = QWidget()
+        self.wdg_header.setObjectName("yolo")
+        self.show()
+        
+
 
 class form(QWidget):
     '''
@@ -63,12 +72,9 @@ class form(QWidget):
         self.tray_icon.activated.connect(self.showNormal)
         self.tray_icon.show()  
 
-         #remove default window and set min size
+        #remove default window and set min size
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint) 
         self._setup()
-       
-        super().setLayout(self.outterLayout)
-        print("added 1")
         self.show()
         
 
@@ -104,7 +110,7 @@ class form(QWidget):
         self.btn_exit.clicked.connect(self.exit)    
     
     def setLayout(self, layout):
-        raise ReferenceError("use setCenterWidget instead")
+         raise ReferenceError("use setCenterWidget instead")
         
     def _setup(self):
         

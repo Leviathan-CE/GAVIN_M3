@@ -1,4 +1,4 @@
-import markdown
+import markdown2
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QTextEdit
 from PyQt6.QtGui import QPixmap 
 from PyQt6.QtWebEngineWidgets import QWebEngineView
@@ -29,10 +29,10 @@ class UltimateMD(QWidget):
             print(block)
             # If the block is even, it's a Markdown block
             if i % 2 == 0:
-                html_content = markdown.markdown(block,extensions=['fenced_code'])
-                label = QTextEdit()
-                label.setHtml(html_content)
-                layout.addWidget(label)
+                textedit = QTextEdit(self)    
+                textedit.setMarkdown(block)
+                layout.addWidget(textedit)
+       
 
             # If the block is odd, it's a latex block
             elif len(block) != 0:
@@ -53,12 +53,13 @@ class UltimateMD(QWidget):
                 label.setPixmap(pixmap)
                 layout.addWidget(label)
 
+       
         self.setLayout(layout)
         self.show()
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication([])  # sys.argv
 
     # Your content
     markdown_content = """

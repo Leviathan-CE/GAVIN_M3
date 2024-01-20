@@ -1,12 +1,44 @@
 import markdown
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QTextBrowser
+from PyQt6.QtWidgets import QApplication 
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QTextBrowser, QTextEdit
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtCore import QUrl 
+from PyQt6.QtWebEngineCore import QWebEnginePage
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QTextDocument
+
+# Your code using QTextDocument goes here
+
 import sys
 
 # Create the HTML template that includes the Highlight.js library
-html_template_code = """
+
+
+#why this works on its own and not when i attach to to another widget is beyond me but somthing is amiss
+markdown_content = """
+This is an inline math example $e^{i\\pi} + 1 = 0$ 
+
+# hi lo
+
+This is a code block with syntax highlighting:
+
+```Java
+
+public void hello_world(){
+    print("Hello, world!");
+    }
+
+hello_world();
+```
+And this is a displayed math example:
+
+$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
+
+\\[sum_{i=1}^{n} i = \\frac{n(n+1)}{2}\\]
+
+"""
+
+class UltimateMD(QWebEngineView):
+   html_template_code = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +51,7 @@ html_template_code = """
 </body>
 </html>
 """
-
-html_template_math = """
+   html_template_math = """
 <html>
 <head>
 <meta charset="utf-8">
@@ -40,53 +71,82 @@ MathJax.Hub.Config({{
 </body>
 </html>
 """
-
-#why this works on its own and not when i attach to to another widget is beyond me but somthing is amiss
-
-
-class UltimateMD(QWidget):
-
    def __init__(self, content: str):
        super().__init__()
+       self.setObjectName("md")
+       
        # Convert the markdown to HTML
        html_content = markdown.markdown(
            content, extensions=['fenced_code', 'codehilite'])
        # Create the HTML template that includes the MathJax and Highlight.js libraries
-       full_html = html_template_code.format(
-           content=html_template_math.format(content=html_content))
-       # Create QWebEngineView instance
-       self.web_engine_view = QWebEngineView()
-       # Set the HTML content with syntax-highlighted code and rendered math
-       self.web_engine_view.setHtml(full_html)
-       vbox = QVBoxLayout()
-       self.setLayout(vbox)
-       self.layout().addWidget(self.web_engine_view)  # type:ignore
+       full_html = UltimateMD.html_template_code.format(content=UltimateMD.html_template_math.format(content=html_content))
+       # Create QWebEngineView instance        
+       self.setHtml(full_html)      
+       self.page().runJavaScript(full_html)       
        self.show()
-       pass
+       
 
+class UltimateMD_allinone(QWebEngineView):
+   '''
+   currently works standalone however adding this class to 
+   a new laout ends up with nothing being parsed into html 
+   '''
+   def __init__(self, content: str):
+       super().__init__()
+            
+       self.html: str = self._init_html(content)
+       print(f"HTML::::{self.html}")
+       self.setHtml(self.html)
+       self.show()
+       
+   def _init_html(self, content:str):      
+        html_viewer = """
+       <html>
+        <head>
+        <meta charset="utf-8">
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({{ tex2jax: {{
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }},
+            jax: ["input/TeX", "output/HTML-CSS"],
+            "HTML-CSS": {{ availableFonts: ["TeX"] }}
+        }});
+        </script>
+        <script type="text/javascript" async src="C:/Users/Levi/Desktop/GAVIN_M3/src/gui/js/MathJax-2.7.7/MathJax.js"></script>
+        </head>
+        <body>
+        <div>
+        {content}
+        </div>
+        </body>
+        </html>
+        """
+
+         # Convert the markdown to HTML
+        html_content = markdown.markdown(
+            content, extensions=['fenced_code'], output_format='html')     
+        
+        print(html_content)
+        # Create the HTML template that includes the MathJax
+        full_html = html_viewer.format(content=html_content)
+        
+        # Create QWebEngineView instance
+        return full_html
+       
+        
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    markdown_content = """
-This is an inline math example $e^{i\\pi} + 1 = 0$ 
-
-# hi lo
-
-This is a code block with syntax highlighting:
-
-```Java
-
-public void hello_world(){
-    print("Hello, world!");
-    }
-
-hello_world();
-```
-And this is a displayed math example:
-
-$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
-
-"""
-    u = UltimateMD(content=markdown_content)
-    u.show()
+    
+    app = QApplication(sys.argv)  
+    form = QWidget()  
+    vb = QVBoxLayout()
+    form.setLayout(vb)
+    u = UltimateMD_allinone(content=markdown_content)
+    ub = UltimateMD_allinone(content=markdown_content)
+    form.layout().addWidget(u)
+    form.layout().addWidget(ub)
+   
+    form.show()
     app.exec()
