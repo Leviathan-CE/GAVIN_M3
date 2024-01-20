@@ -3,8 +3,8 @@ import markdown2
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-
-
+import mistune
+from src.data.paths import ROOT
 class MarkdownLatexViewer(QMainWindow):
     def __init__(self, md_file_path):
         super().__init__()
@@ -17,12 +17,13 @@ class MarkdownLatexViewer(QMainWindow):
         # Read the Markdown content from the file and convert it to HTML
         with open(md_file_path, 'r', encoding='utf-8') as file:
             markdown_content = file.read()
-            html_content = markdown2.markdown(f"{markdown_content}")
+            html_content = mistune.markdown(f"{markdown_content}")
 
         # Add MathJax script to the HTML content for LaTeX rendering
         html_with_mathjax = fr"""
  <html>
         <head>
+        <base href="{ROOT}">
         <meta charset="utf-8">
         <script type="text/x-mathjax-config">
         MathJax.Hub.Config({{ tex2jax: {{
@@ -53,7 +54,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # Replace 'path/to/your/file.md' with the actual path to your Markdown file
-    md_file_path = 'C:\\Users\\Levi\\Desktop\\GAVIN_M3\\src\\wip\\markdowntext.md'
+    md_file_path = r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md"
 
     viewer = MarkdownLatexViewer(md_file_path)
     viewer.show()
