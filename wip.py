@@ -71,7 +71,7 @@ hello_world();
 
     import sys
     import src.wip.md2_viewer as view
-    from src.wip.md_filereader import MarkdownLatexViewer
+    from src.gui.md_filereader import MarkdownLatexViewer
     from src.wip.html_viewer import UltimateMD, UltimateMD_allinone
     from src.gui.ChatHistory import ScrollableWidget, ViewPort
     from src.data.paths import MD_CONTENT
