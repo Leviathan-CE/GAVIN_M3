@@ -19,9 +19,10 @@ class MarkdownLatexViewer(QMainWindow):
         with open(md_file_path, 'r', encoding='utf-8') as file:
             markdown_content = file.read() 
             html_content = mistune.markdown(f"{markdown_content}")
+            file.close()
 
         # Add MathJax script to the HTML content for LaTeX rendering
-        # local mathjax path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
+        # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
         # web mathjax https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML
         html_with_mathjax = fr"""
  <html>
@@ -55,16 +56,10 @@ class MarkdownLatexViewer(QMainWindow):
         self.webview.setHtml(html_with_mathjax)
         print(self.webview.page().url())
         # Set the web engine view as the central widget
-        self.setCentralWidget(self.webview)
-        # print(self.webview.page().contentsSize().toSize().height())
-        # print(self.webview.page().contentsSize().toSize().width())
-        # self.setFixedSize(self.webview.page().contentsSize().toSize())
-        # self.webview.setFixedSize(self.webview.page().contentsSize().toSize())
+        self.setCentralWidget(self.webview)    
 
     def on_load_finished(self, ok):
         if ok:
-            self.webview.page().runJavaScript(
-                "MathJax.Hub.Queue(['Typeset', MathJax.Hub]);")
             # Adjust the minimum size based on the content size
             size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,50))
             self.setMinimumSize(size)
