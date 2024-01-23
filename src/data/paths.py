@@ -33,13 +33,15 @@ import sys
 print(sys.path)
 
 # note ROOT should always be 'some path\GAVIN\src'
-ROOT:str = os.path.abspath('src')
+ROOT:str = os.path.abspath('src').replace("\\","/")
 print(ROOT)
 
-DATA:str = f"{ROOT}\\data"
+DATA:str = f"{ROOT}/data"
 
 
-GUI:str = f"{ROOT}\\gui"
-GUI_IMGS:str = f"{GUI}\\imgs"
-GUI_STYLES:str = f"{GUI}\\styles"
+GUI:str = f"{ROOT}/gui"
+GUI_IMGS:str = f"{GUI}/imgs"
+GUI_STYLES:str = f"{GUI}/styles"
+
+MD_CONTENT:str = f"{DATA}/markdowntext.md"
 

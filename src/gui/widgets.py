@@ -23,16 +23,7 @@ from PyQt6.QtWebEngineWidgets import QWebEngineView
 
 from src.gui.menuBar import ToolBarHeader
 
-from src.data.paths import GUI_IMGS       
-
-class Form(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.outterLayout = QVBoxLayout(self)
-        self.wdg_header = QWidget()
-        self.wdg_header.setObjectName("yolo")
-        self.show()
-        
+from src.data.paths import GUI_IMGS           
 
 
 class form(QWidget):

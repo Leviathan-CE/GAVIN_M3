@@ -1,5 +1,5 @@
 from src.gui.Buttons import BTNMenu
-from src.gui.widgets import form, Form
+from src.gui.widgets import form
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget
@@ -14,23 +14,25 @@ from src.data.paths import GUI_STYLES
 
 if __name__ == "__main__":
     markdown_content = """
-    This is an inline math example $e^{i\\pi} + 1 = 0$ 
-
     # hi lo
 
-    This is a code block with syntax highlighting:
+This is an inline math example $e^{i\pi} + 1 = 0$
 
-    ```Java
+This is a code block with syntax highlighting:
 
+```java
     public void hello_world(){
         print("Hello, world!");
         }
 
     hello_world();
-    ```
-    And this is a displayed math example:
+```
+ 
+And this is a displayed math example:
 
-    $$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+
+![yup](src/gui/imgs/icon.png)
 
     """
     latex_content = """
@@ -71,17 +73,29 @@ hello_world();
     import src.wip.md2_viewer as view
     from src.wip.md_filereader import MarkdownLatexViewer
     from src.wip.html_viewer import UltimateMD, UltimateMD_allinone
+    from src.gui.ChatHistory import ScrollableWidget, ViewPort
+    from src.data.paths import MD_CONTENT
     app = QApplication(sys.argv)
-    btn = Form()
+    btn = form()
     
     btn.setFixedSize(500,800)      
     viewer = MarkdownLatexViewer(
-        r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
+        MD_CONTENT)
+    scrol_view = ViewPort(300,400)
+    btn.setCenterWidget(scrol_view)
     
     #print(f"afterall::::: {viewer._init_html(markdown_content)}")
    # viewer.setHtml(latex_content)
     #btn.setCenterWidget(viewer)
-    btn.layout().addWidget(viewer)
+    scrol_view.add_widget(viewer)
+    
+    # viewer2 = MarkdownLatexViewer(
+    #     r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
+    # scrol_view.add_widget(viewer2)
+    
+    # viewer3 = MarkdownLatexViewer(
+    #     r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
+    # scrol_view.add_widget(viewer3)
    
     
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
