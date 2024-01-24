@@ -1,5 +1,3 @@
-import sys
-import markdown2
 from PyQt6.QtCore import QUrl, QSize, QMargins
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView

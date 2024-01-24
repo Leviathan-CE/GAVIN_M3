@@ -82,21 +82,9 @@ hello_world();
     viewer = MarkdownLatexViewer(
         MD_CONTENT)
     scrol_view = ViewPort(300,400)
-    btn.setCenterWidget(scrol_view)
-    
-    #print(f"afterall::::: {viewer._init_html(markdown_content)}")
-   # viewer.setHtml(latex_content)
-    #btn.setCenterWidget(viewer)
+    btn.setCenterWidget(scrol_view)    
     scrol_view.add_widget(viewer)
-    
-    # viewer2 = MarkdownLatexViewer(
-    #     r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
-    # scrol_view.add_widget(viewer2)
-    
-    # viewer3 = MarkdownLatexViewer(
-    #     r"C:\Users\Levi\Desktop\GAVIN_M3\markdowntext.md")
-    # scrol_view.add_widget(viewer3)
-   
+ 
     
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
     app.setStyleSheet(file.read())
