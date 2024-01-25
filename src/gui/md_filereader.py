@@ -4,20 +4,13 @@ from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
 from src.data.paths import ROOT, MD_CONTENT
 class MarkdownLatexViewer(QMainWindow):
-    def __init__(self, md_file_path):
+    def __init__(self, markdown_content:str):
         super().__init__()
-        
-        self.setWindowTitle("Markdown and LaTeX Viewer")
-
         # Create a web engine view to display HTML content
         self.webview = QWebEngineView()
         
         self.webview.page().loadFinished.connect(self.on_load_finished)
-        # Read the Markdown content from the file and convert it to HTML
-        with open(md_file_path, 'r', encoding='utf-8') as file:
-            markdown_content = file.read() 
-            html_content = mistune.markdown(f"{markdown_content}")
-            file.close()
+        html_content = mistune.markdown(markdown_content.replace("\f", "\\f"))
 
         # Add MathJax script to the HTML content for LaTeX rendering
         # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
@@ -47,9 +40,10 @@ class MarkdownLatexViewer(QMainWindow):
         </body>
         </html>
         """
-        
-        base_url = QUrl.fromLocalFile(ROOT)
-        print(base_url)
+
+        #chaning baseurl allows images to render but not latex        
+        # base_url = QUrl.fromLocalFile(ROOT)
+        # print(base_url)
         # Set the HTML content to the web engine view
         self.webview.setHtml(html_with_mathjax)
         print(self.webview.page().url())
