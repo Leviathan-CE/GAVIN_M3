@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QUrl, QSize, QMargins
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QLabel, QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
 from src.data.paths import ROOT

@@ -82,7 +82,8 @@ hello_world();
     viewer = MarkdownLatexViewer(
         markdown_content)
     scrol_view = ViewPort(300,400)
-    btn.setCenterWidget(scrol_view)    
+    btn.setCenterWidget(scrol_view)
+    
     scrol_view.add_widget(viewer)
     
     code_block = CodeBlock(markdown_content)
