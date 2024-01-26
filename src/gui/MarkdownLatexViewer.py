@@ -54,10 +54,10 @@ class MarkdownLatexViewer(QMainWindow):
         """
 
         #chaning baseurl allows images to render but not latex        
-        # base_url = QUrl.fromLocalFile(ROOT)
+        base_url = QUrl.fromLocalFile(ROOT)
         # print(base_url)
         # Set the HTML content to the web engine view
-        self.webview.setHtml(html_with_mathjax)
+        self.webview.setHtml(html_with_mathjax)        
         print(self.webview.page().url())
         
         # Set the web engine view as the central widget

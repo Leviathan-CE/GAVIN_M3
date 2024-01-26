@@ -19,10 +19,9 @@ class CodeBlock(QWidget):
         from src.gui.Buttons import BTNClipboardCopy
         from src.gui.menuBar import CodeBlockHeader
         import mistune  
-        from src.data.paths import GUI_STYLES
-        from src.data.settings import MAX_VIEW_WIDTH
+        from src.data.paths import GUI_STYLES       
         from src.gui.textHighLighters import TextHighlighter
-        self.setMaximumWidth(MAX_VIEW_WIDTH)        
+               
         main_layout = QVBoxLayout()
         self.setLayout(main_layout)
         main_layout.setSpacing(0)
