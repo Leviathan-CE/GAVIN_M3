@@ -14,7 +14,7 @@ from src.data.paths import GUI_STYLES
 
 if __name__ == "__main__":
     markdown_content = """
-    # hi lo
+# hi lo
 
 This is an inline math example $e^{i\pi} + 1 = 0$
 
@@ -71,9 +71,10 @@ hello_world();
 
     import sys
     
-    from src.gui.md_filereader import MarkdownLatexViewer    
+    from src.gui.MarkdownLatexViewer import MarkdownLatexViewer    
     from src.gui.ChatHistory import ScrollableWidget, ViewPort
     from src.data.paths import MD_CONTENT
+    from src.gui.MessageTypes import CodeBlock
     app = QApplication(sys.argv)
     btn = form()
     
@@ -83,9 +84,12 @@ hello_world();
     scrol_view = ViewPort(300,400)
     btn.setCenterWidget(scrol_view)    
     scrol_view.add_widget(viewer)
+    
+    code_block = CodeBlock(markdown_content)
+    scrol_view.add_widget(code_block)
  
     
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
     app.setStyleSheet(file.read())
-    
+    file.close()
     app.exec()

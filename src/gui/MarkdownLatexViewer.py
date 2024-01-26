@@ -2,13 +2,14 @@ from PyQt6.QtCore import QUrl, QSize, QMargins
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
-from src.data.paths import ROOT, MD_CONTENT
+from src.data.paths import ROOT
+from src.data.settings import MAX_VIEW_WIDTH
 class MarkdownLatexViewer(QMainWindow):
     def __init__(self, markdown_content:str):
         super().__init__()
         # Create a web engine view to display HTML content
         self.webview = QWebEngineView()
-        
+        self.setMaximumWidth(MAX_VIEW_WIDTH)
         self.webview.page().loadFinished.connect(self.on_load_finished)
         html_content = mistune.markdown(markdown_content.replace("\f", "\\f"))
 
@@ -18,9 +19,17 @@ class MarkdownLatexViewer(QMainWindow):
         html_with_mathjax = fr"""
  <html>
         <head>
-        <base href="{ROOT}">
-        <meta charset="utf-8">        
         
+        <meta charset="utf-8">       
+       <base href="{ROOT}">
+                  <script>
+        document.addEventListener("DOMContentLoaded", function() {{
+          
+            var style = document.createElement('style');
+            style.innerHTML = 'body {{ background-color: rgb(15, 15,15); color: white; }}';
+            document.head.appendChild(style);
+        }});
+    </script> 
         <script type="text/x-mathjax-config">
         MathJax.Hub.Config({{ tex2jax: {{
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -47,8 +56,10 @@ class MarkdownLatexViewer(QMainWindow):
         # Set the HTML content to the web engine view
         self.webview.setHtml(html_with_mathjax)
         print(self.webview.page().url())
+        
         # Set the web engine view as the central widget
-        self.setCentralWidget(self.webview)    
+        self.setCentralWidget(self.webview)  
+       
 
     def on_load_finished(self, ok):
         if ok:

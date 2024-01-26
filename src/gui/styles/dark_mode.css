@@ -7,6 +7,62 @@ QWidget {
     
 }
 
+QLabel#code {
+    background-color: rgb(5, 5, 5);
+    border-style: outset;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-width: 0px;
+    border-color: rgb(5, 5, 5);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+QWidget#code_header {
+    background-color: rgb(65, 65, 65);
+    border-style: outset;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+
+}
+QLabel#code_header_txt {
+        background-color: rgb(65, 65, 65);
+        color: white ;
+        border-style: outset;
+        border-top-left-radius: 10px;
+        
+}
+
+QPushButton#code_header_btn {
+    background-color: rgb(65, 65, 65);    
+    border-style: outset;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 5px ;
+    border-bottom-right-radius: 5px ;
+    border-top-left-radius: 5px ;
+    color: white;
+    border-style: outset;
+    border-width: 0px;
+}
+QPushButton#code_header_btn:hover {
+    background-color: rgb(55, 55, 55);
+
+
+}
+
+QPushButton#code_header_btn:pressed {
+    background-color: rgb(35, 35, 35);
+}
+
+QWebEngineView#tex_md {
+        background-color: rgb(15, 15, 15);
+        color: white;
+}
+
+
 
 /*not working on making corners rounded*/
 /* QVBoxLayout {

@@ -1,89 +1,27 @@
-import markdown2
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QTextEdit
-from PyQt6.QtGui import QPixmap 
-from PyQt6.QtWebEngineWidgets import QWebEngineView
-import sys
-import matplotlib.pyplot as plt
-import io
-import re
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QFrame
 
+app = QApplication([])
 
-class UltimateMD3(QWidget):
-    def __init__(self, content: str):
-        super().__init__()
+# Create a QWidget
+widget = QWidget()
 
+# Create a QVBoxLayout
+layout = QVBoxLayout(widget)
 
-        # Define a regular expression pattern with the delimiters
-        delimiter_pattern = r'\$\$|\$'
+# Create a header
+header = QFrame()
+header.setFixedHeight(50)  # Set the height of the header
+# Set the background color of the header
+header.setStyleSheet("background-color: blue;")
 
-        # Use re.split() to split the string based on the pattern
-        blocks = re.split(delimiter_pattern, content)
-        # Split the content into blocks using triple backticks
-        # blocks = content.split(["$","$$"])
+# Create widgets for items
+item1 = QPushButton("Item 1")
+item2 = QPushButton("Item 2")
 
-        # Create a layout to hold the widgets
-        layout = QVBoxLayout(self)
+# Add widgets to the layout
+layout.addWidget(header)
+layout.addWidget(item1)
+layout.addWidget(item2)
 
-        # Loop through the blocks
-        for i, block in enumerate(blocks):
-            print(block)
-            # If the block is even, it's a Markdown block
-            if i % 2 == 0:
-                print("hi")
-                textedit = QWebEngineView(self) 
-                html = markdown2.markdown(block)
-                print(html)
-                textedit.setHtml(html)
-                layout.addWidget(textedit)
-       
-
-            # If the block is odd, it's a latex block
-            elif len(block) != 0:
-                fig, ax = plt.subplots(figsize=[5,1])
-                ax.text(0.5, 0.5, f"${block}$", size=20, ha='center', va='center')
-                ax.axis('off')
-
-                # Convert the figure to a QPixmap
-                buffer = io.BytesIO()
-                plt.savefig(buffer, format='png',
-                            bbox_inches='tight', pad_inches=0)
-                buffer.seek(0)
-                pixmap = QPixmap()
-                pixmap.loadFromData(buffer.read())
-
-                # Create QLabel to display the rendered image
-                label = QLabel()
-                label.setPixmap(pixmap)
-                layout.addWidget(label)
-
-       
-        self.setLayout(layout)
-        self.show()
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)  # sys.argv
-
-    # Your content
-    markdown_content = """
-This is an inline math example $e^{i\\pi} + 1 = 0$ 
-
-# hi lo
-
-This is a code block with syntax highlighting:
-
-```Java
-    public void hello_world(){
-        print("Hello, world!");
-        }
-
-    hello_world();
-```
-And this is a displayed math example:
-
-$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ 
-    """
-
-    u = UltimateMD3(content=markdown_content)
-    u.show()
-    sys.exit(app.exec())
+widget.show()
+app.exec()

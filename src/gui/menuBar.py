@@ -4,15 +4,56 @@ from PyQt6 import QtGui
 from PyQt6.QtWidgets import (
     QToolBar,
     QMenu,
-    QApplication,   
+    QApplication,  
+    QWidget ,
+    QHBoxLayout,
+    QLabel,
+    QSpacerItem,
+    QSizePolicy,
+    QFrame
 )
+
 from PyQt6.QtCore import QEvent, QSize, Qt, QPoint, QPointF
 from PyQt6.QtGui import QIcon, QAction, QMouseEvent
 from src.data.paths import GUI_IMGS
 
 
 
+class CodeBlockHeader(QFrame):
+    
+    def __init__(self, code_type:str):
+        super().__init__()
+        from src.gui.Buttons import BTNClipboardCopy
+        from src.data.paths import GUI_STYLES
+        
+        self.setMaximumHeight(36)
+        self.setContentsMargins(0,0,0,0)
+        self.setObjectName("code_header")
+        
+        
+        layout = QHBoxLayout()
+        self.setLayout(layout)
+        layout.setSpacing(0)
+        layout.setContentsMargins(0,0,0,0)
+        
+        text = QLabel(self)
+        text.setObjectName("code_header_txt")
+        text.setContentsMargins(15,5,5,5)
+        text.setText(code_type)
+        
+        self.btn_clipboard = BTNClipboardCopy(id="code_header_btn")
 
+        spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        layout.setAlignment(Qt.AlignmentFlag.AlignLeft)        
+        layout.addWidget(text)
+        layout.addItem(spacer)
+        layout.addWidget(self.btn_clipboard)      
+        self.show()
+        
+        
+        
+        
 
 class ToolBarHeader(QToolBar):
     '''

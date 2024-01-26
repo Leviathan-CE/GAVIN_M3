@@ -83,3 +83,15 @@ class BTNMenu(Button):
         print("menu button pressed")
 
 
+class BTNClipboardCopy(Button):
+
+    def __init__(self, id: str = "", size=BUTTON_DEFAULT_SIZE):
+        super().__init__(id, size)
+        from PyQt6.QtGui import QPixmap
+        pixmap = QPixmap(GUI_IMGS+"\\clipboard-icon.png")
+        self.setContentsMargins(10,10,10,10)
+        scaled_img = pixmap.scaled(15,15)
+        self._img = QIcon(scaled_img)
+        self.setIconSize(QSize(int(size[0]/2), int(size[1]/2)))
+        self.setIcon(self._img)
+        self.setText("Copy code")

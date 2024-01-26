@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QSizePolicy
 )
 from PyQt6.QtCore import Qt
-
+from src.data.settings import MAX_VIEW_WIDTH
 
 
 
@@ -19,6 +19,7 @@ class ScrollableWidget(QScrollArea):
 
     def __init__(self, width: int, height: int):
         super().__init__()
+        
         self.v_layout = QVBoxLayout()
         self.scrollbar = QScrollBar()
         self._wdg = QWidget()  # base
@@ -53,7 +54,7 @@ class ViewPort(ScrollableWidget):
     def __init__(self, width: int, height: int):
         super().__init__(width, height)
         self.setAlignment(Qt.AlignmentFlag.AlignBottom)
-
+        
     def scroll_bottom(self):
         self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())
         print("scroll to bottom")
