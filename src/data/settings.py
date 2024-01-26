@@ -1,2 +1,2 @@
 
-MAX_VIEW_WIDTH:int = 700
+MAX_VIEW_WIDTH:int = 450

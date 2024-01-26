@@ -1,7 +1,8 @@
 from PyQt6.QtCore import QUrl, QSize, QMargins
-from PyQt6.QtWidgets import QLabel, QApplication, QMainWindow
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel, QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
+from PyQt6.QtCore import Qt
 from src.data.paths import ROOT
 from src.data.settings import MAX_VIEW_WIDTH
 class MarkdownLatexViewer(QMainWindow):
@@ -10,8 +11,10 @@ class MarkdownLatexViewer(QMainWindow):
         # Create a web engine view to display HTML content
         self.webview = QWebEngineView()
         self.setMaximumWidth(MAX_VIEW_WIDTH)
+        self.webview.setMaximumWidth(MAX_VIEW_WIDTH)
         self.webview.page().loadFinished.connect(self.on_load_finished)
         html_content = mistune.markdown(markdown_content.replace("\f", "\\f"))
+        
 
         # Add MathJax script to the HTML content for LaTeX rendering
         # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
@@ -59,13 +62,13 @@ class MarkdownLatexViewer(QMainWindow):
         
         # Set the web engine view as the central widget
         self.setCentralWidget(self.webview)  
-       
+
 
     def on_load_finished(self, ok):
         if ok:
             # Adjust the minimum size based on the content size
             size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,50))
-            self.setMinimumSize(size)
+            self.setMinimumSize(size)            
             self.webview.setMinimumSize(size)
 
 
