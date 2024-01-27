@@ -18,32 +18,34 @@ if __name__ == "__main__":
 
 This is an inline math example $e^{i\pi} + 1 = 0$
 
-This is a code block with syntax highlighting:
+This is a code block with syntax highlighting: to this is a really long sentance and i like it
 
-```java
-    public void hello_world(){
-        print("Hello, world!");
-        }
+```Python
 
-    hello_world();
+from PyQt6.QtWidgets import QTextEdit, QApplication
+
+class MyTextEdit(QTextEdit):
+    def __init__(self):
+        super().__init__()
+        self.document().contentsChanged.connect(self.adjustSize)
+
+from PyQt6.QtWidgets import QTextEdit, QApplication
+
 ```
  
 And this is a displayed math example:
 
 $$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
 
-![yup](src/gui/imgs/icon.png)
-
-g
-
-g
 
 
 g
 
 g
 
+
 g
+
 g
 
 g
@@ -51,46 +53,14 @@ g
 
 g
 g
+
+g
+g
 g
 
 g
-
-
-    """
-    latex_content = """
-            <html>
-        <head>
-        <meta charset="utf-8">
-        <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-                inlineMath: [['$','$'], ['\(','\)']],
-                displayMath: [['$$','$$'], ['\[','\]']],
-                processEscapes: true
-            }
-        });
-        </script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
-        </head>
-        <body>
-        <div>
-        <p>This is an inline math example $e^{i\pi} + 1 = 0$ </p>
-<h1>hi lo</h1>
-<p>This is a code block with syntax highlighting:</p>
-<pre><code class="language-Java">
-public void hello_world(){
-    print(&quot;Hello, world!&quot;);
-    }
-
-hello_world();
-</code></pre>
-<p>And this is a displayed math example:</p>
-<p>$$\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$ </p>
-        </div>
-        </body>
-        </html>
-    """
-
+"""
+#![yup](src/gui/imgs/icon.png)
     import sys
     
     from src.gui.MarkdownLatexViewer import MarkdownLatexViewer    

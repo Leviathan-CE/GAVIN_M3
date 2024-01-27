@@ -7,7 +7,7 @@ QWidget {
     
 }
 
-QLabel#code {
+QTextEdit#code {
     background-color: rgb(5, 5, 5);
     border-style: outset;
     border-bottom-left-radius: 15px;

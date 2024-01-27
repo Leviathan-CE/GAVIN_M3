@@ -6,9 +6,14 @@ from PyQt6.QtCore import Qt
 from src.data.paths import ROOT
 from src.data.settings import MAX_VIEW_WIDTH
 class MarkdownLatexViewer(QMainWindow):
+    """_summary_
+    a html formatter that extends markdown thats avaible to pyqt6
+    to allow for $$ latex maths inline and reg expressions.
+    
+    """
     def __init__(self, markdown_content:str):
         super().__init__()
-        # Create a web engine view to display HTML content
+        # Create a web engine view to display complex HTML content
         self.webview = QWebEngineView()
         self.setMinimumHeight(50)
         self.setMaximumWidth(MAX_VIEW_WIDTH)
@@ -65,13 +70,9 @@ class MarkdownLatexViewer(QMainWindow):
         self.setCentralWidget(self.webview) 
         print(self.webview.size())
         
-
-
-
     def on_load_finished(self, ok):
-        
-        if ok:
-            # Adjust the minimum size based on the content size
+        # Adjust the minimum size based on the content size
+        if ok:            
             size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,50))
             self.setMinimumHeight(size.height())            
             self.webview.setMinimumHeight(size.height())
