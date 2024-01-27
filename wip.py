@@ -34,6 +34,28 @@ $$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
 
 ![yup](src/gui/imgs/icon.png)
 
+g
+
+g
+
+
+g
+
+g
+
+g
+g
+
+g
+g
+
+g
+g
+g
+
+g
+
+
     """
     latex_content = """
             <html>
@@ -74,21 +96,26 @@ hello_world();
     from src.gui.MarkdownLatexViewer import MarkdownLatexViewer    
     from src.gui.ChatHistory import ScrollableWidget, ViewPort
     from src.data.paths import MD_CONTENT
-    from src.gui.MessageTypes import CodeBlock
+    from src.gui.MessageTypes import CodeBlock, MessageWidget
+    from src.gui.TextInputBar import TextInputBar
     app = QApplication(sys.argv)
     btn = form()
     
-    btn.setFixedSize(500,800)      
+    btn.setFixedSize(500,800) 
+    scrol_view = ViewPort(300, 400)
+    input = TextInputBar(400)
     viewer = MarkdownLatexViewer(
         markdown_content)
-    scrol_view = ViewPort(300,400)
+    
     btn.setCenterWidget(scrol_view)
     
     scrol_view.add_widget(viewer)
-    
+    btn.layout().addWidget(input)
     code_block = CodeBlock(markdown_content)
     scrol_view.add_widget(code_block)
- 
+    
+    msg = MessageWidget(markdown_content)
+    scrol_view.add_widget(msg)
     
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
     app.setStyleSheet(file.read())

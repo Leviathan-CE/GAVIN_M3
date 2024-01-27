@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QUrl, QSize, QMargins
-from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel, QApplication, QMainWindow
+from PyQt6.QtWidgets import QSizePolicy, QTextEdit, QVBoxLayout, QWidget, QLabel, QApplication, QMainWindow
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
 from PyQt6.QtCore import Qt
@@ -10,12 +10,14 @@ class MarkdownLatexViewer(QMainWindow):
         super().__init__()
         # Create a web engine view to display HTML content
         self.webview = QWebEngineView()
+        self.setMinimumHeight(50)
         self.setMaximumWidth(MAX_VIEW_WIDTH)
         self.webview.setMaximumWidth(MAX_VIEW_WIDTH)
         self.webview.page().loadFinished.connect(self.on_load_finished)
         html_content = mistune.markdown(markdown_content.replace("\f", "\\f"))
-        
-
+     
+        self.webview.setSizePolicy(QSizePolicy.Policy.Expanding,
+                            QSizePolicy.Policy.Minimum)
         # Add MathJax script to the HTML content for LaTeX rendering
         # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
         # web mathjax https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML
@@ -57,19 +59,21 @@ class MarkdownLatexViewer(QMainWindow):
         base_url = QUrl.fromLocalFile(ROOT)
         # print(base_url)
         # Set the HTML content to the web engine view
-        self.webview.setHtml(html_with_mathjax)        
-        print(self.webview.page().url())
-        
+        self.webview.setHtml(html_with_mathjax)       
+      
         # Set the web engine view as the central widget
-        self.setCentralWidget(self.webview)  
+        self.setCentralWidget(self.webview) 
+        print(self.webview.size())
+        
+
 
 
     def on_load_finished(self, ok):
+        
         if ok:
             # Adjust the minimum size based on the content size
             size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,50))
-            self.setMinimumSize(size)            
-            self.webview.setMinimumSize(size)
-
-
+            self.setMinimumHeight(size.height())            
+            self.webview.setMinimumHeight(size.height())
+           
 

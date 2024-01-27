@@ -1,5 +1,5 @@
 
-from PyQt6.QtWidgets import QFrame, QSizePolicy, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, QSpacerItem
+from PyQt6.QtWidgets import QVBoxLayout, QFrame, QSizePolicy, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, QSpacerItem
 from PyQt6.QtCore import Qt
 
 
@@ -9,7 +9,24 @@ class MessageWidget(QWidget):
     def __init__(self, message:str):
         super().__init__()
         from src.gui.InputParser import get_text_blocks
-        blocks:[list[dict[str,str]]] = get_text_blocks(message)
+        from src.gui.MarkdownLatexViewer import MarkdownLatexViewer
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        blocks:list[dict[str,str]] = get_text_blocks(message)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding,
+                            QSizePolicy.Policy.Expanding)
+        
+        
+        for blk in blocks:
+           
+            if(blk is not None):
+                if blk['type'] == "code":
+                    print(blk['content'])
+                    layout.addWidget(CodeBlock(blk['content']))
+                if blk['type'] == "text":
+                    layout.addWidget(MarkdownLatexViewer(blk['content']))
+
+          
 
 
 class CodeBlock(QWidget):
@@ -27,7 +44,7 @@ class CodeBlock(QWidget):
         main_layout.setSpacing(0)
         
         
-        code_header = CodeBlockHeader(code.split()[1])
+        code_header = CodeBlockHeader(code.split()[0].strip("```"))
         code_header.btn_clipboard.clicked.connect(self.copy_tp_clipboard)
         html_content = mistune.markdown(code)
 
