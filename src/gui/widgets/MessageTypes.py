@@ -12,7 +12,7 @@ class MessageWidget(QWidget):
     def __init__(self, message:str):
         super().__init__()
         from src.gui.InputParser import get_text_blocks
-        from src.gui.MarkdownLatexViewer import MarkdownLatexViewer
+        from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
         layout = QVBoxLayout()
         self.setLayout(layout)
         blocks:list[dict[str,str]] = get_text_blocks(message)
@@ -35,7 +35,7 @@ class CodeBlock(QWidget):
     
     def __init__(self, code:str):
         super().__init__()        
-        from src.gui.menuBar import CodeBlockHeader
+        from src.gui.widgets.menuBar import CodeBlockHeader
         import mistune         
                
         main_layout = QVBoxLayout()
