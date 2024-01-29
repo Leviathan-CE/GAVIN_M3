@@ -21,9 +21,9 @@ from src.gui.widgets.Buttons import (
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 
-from src.gui.widgets.menuBar import ToolBarHeader
+from src.gui.widgets.MenuBar import ToolBarHeader
 
-from src.data.paths import GUI_IMGS           
+from src.data.Paths import GUI_IMGS           
 
 
 class form(QWidget):

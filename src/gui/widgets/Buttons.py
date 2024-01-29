@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QApplication
 
 )
-from src.data.paths import GUI_IMGS
+from src.data.Paths import GUI_IMGS
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
 

@@ -15,7 +15,7 @@ from PyQt6.QtWidgets import (
 
 from PyQt6.QtCore import QEvent, QSize, Qt, QPoint, QPointF
 from PyQt6.QtGui import QIcon, QAction, QMouseEvent
-from src.data.paths import GUI_IMGS
+from src.data.Paths import GUI_IMGS
 
 
 
@@ -24,7 +24,7 @@ class CodeBlockHeader(QFrame):
     def __init__(self, code_type:str):
         super().__init__()
         from src.gui.widgets.Buttons import BTNClipboardCopy
-        from src.data.paths import GUI_STYLES
+        from src.data.Paths import GUI_STYLES
         
         self.setMaximumHeight(36)
         self.setContentsMargins(0,0,0,0)
@@ -91,6 +91,7 @@ class ToolBarHeader(QToolBar):
         # TODO:need tyo make work with multiple screens
         if new_delta.y() < 2 and not QApplication.activeWindow().isMaximized():
                     QApplication.activeWindow().showMaximized()
+                    QApplication.activeWindow().window
                 
 
     

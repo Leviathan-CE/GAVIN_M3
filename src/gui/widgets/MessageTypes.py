@@ -23,7 +23,6 @@ class MessageWidget(QWidget):
         for blk in blocks:           
             if(blk is not None):
                 if blk['type'] == "code":
-                    print(blk['content'])
                     layout.addWidget(CodeBlock(blk['content']))
                 if blk['type'] == "text":
                     layout.addWidget(MarkdownLatexViewer(blk['content']))
@@ -35,7 +34,7 @@ class CodeBlock(QWidget):
     
     def __init__(self, code:str):
         super().__init__()        
-        from src.gui.widgets.menuBar import CodeBlockHeader
+        from src.gui.widgets.MenuBar import CodeBlockHeader
         import mistune         
                
         main_layout = QVBoxLayout()

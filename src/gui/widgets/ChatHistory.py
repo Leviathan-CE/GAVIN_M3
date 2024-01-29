@@ -8,10 +8,10 @@ from PyQt6.QtWidgets import (
     QGridLayout,
     QScrollArea,
     QScrollBar,
-    QSizePolicy
+    QSizePolicy,
 )
 from PyQt6.QtCore import Qt
-from src.data.settings import MAX_VIEW_WIDTH
+from src.data.Settings import MAX_VIEW_WIDTH
 
 
 
@@ -32,8 +32,7 @@ class ScrollableWidget(QScrollArea):
 
     def _setup(self, width: int, hieght: int):
         self.setWidgetResizable(True)
-        self.setMinimumSize(width, hieght)
-
+        self.setMinimumSize(width, hieght)      
         self.setVerticalScrollBar(self.scrollbar)
 
         self.v_layout.setAlignment(Qt.AlignmentFlag.AlignBottom)
@@ -54,6 +53,8 @@ class ViewPort(ScrollableWidget):
     def __init__(self, width: int, height: int):
         super().__init__(width, height)
         self.setAlignment(Qt.AlignmentFlag.AlignBottom)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding,
+                           QSizePolicy.Policy.Expanding)
         
     def scroll_bottom(self):
         self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())

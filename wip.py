@@ -1,5 +1,5 @@
-from src.gui.Buttons import BTNMenu
-from src.gui.widgets import form
+from src.gui.widgets.Buttons import BTNMenu
+from src.gui.widgets.Widgets import form
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget
@@ -7,8 +7,8 @@ from PyQt6.QtWidgets import (
 )
 import markdown
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-
-from src.data.paths import GUI_STYLES
+from PyQt6.QtCore import Qt
+from src.data.Paths import GUI_STYLES
 
 
 
@@ -63,17 +63,26 @@ g
 #![yup](src/gui/imgs/icon.png)
     import sys
     
-    from src.gui.MarkdownLatexViewer import MarkdownLatexViewer    
-    from src.gui.ChatHistory import ScrollableWidget, ViewPort
-    from src.data.paths import MD_CONTENT
-    from src.gui.MessageTypes import CodeBlock, MessageWidget
-    from src.gui.TextInputBar import TextInputBar
+    from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer    
+    from src.gui.widgets.ChatHistory import ScrollableWidget, ViewPort
+    from src.data.Paths import MD_CONTENT
+    from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
+    from src.gui.widgets.TextInputBar import TextInputBar
+    from src.GAVIN import GAVIN_MODEL_M3
+   
+    def ismaxed():
+        print("tolo")
+        if btn.isMaximized():
+            scrol_view.resize(1000,scrol_view.size().height())
+        else:
+            scrol_view.resize(500,scrol_view.size().height())
     app = QApplication(sys.argv)
     btn = form()
     
-    btn.setFixedSize(500,800) 
-    scrol_view = ViewPort(300, 400)
-    input = TextInputBar(400)
+    test = GAVIN_MODEL_M3() 
+    btn.setFixedSize(600,800) 
+    scrol_view = ViewPort(600, 400)
+    input = TextInputBar(600)
     viewer = MarkdownLatexViewer(
         markdown_content)
     
@@ -81,8 +90,14 @@ g
     
     scrol_view.add_widget(viewer)
     btn.layout().addWidget(input)
+    btn.layout().setAlignment(input, Qt.AlignmentFlag.AlignHCenter)
+    btn.layout().setAlignment(scrol_view, Qt.AlignmentFlag.AlignHCenter)
+
     code_block = CodeBlock(markdown_content)
     scrol_view.add_widget(code_block)
+    
+    btn.btn_min_max.clicked.connect(ismaxed)
+    
     
     msg = MessageWidget(markdown_content)
     scrol_view.add_widget(msg)
@@ -91,3 +106,6 @@ g
     app.setStyleSheet(file.read())
     file.close()
     app.exec()
+
+
+

@@ -7,6 +7,20 @@ QWidget {
     
 }
 
+QTextEdit#textinput {
+    background-color: rgb(5, 5, 5);
+    border-style: outset;
+    border-radius: 10px;
+    border-width: 0px;
+    border-color: rgb(5, 5, 5);
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
 QTextEdit#code {
     background-color: rgb(5, 5, 5);
     border-style: outset;
@@ -99,6 +113,7 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color:  rgb(35, 35, 35);
 }
+
 
 /*
 ---------------------------------------
