@@ -66,7 +66,7 @@ class CodeBlock(QWidget):
         from PyQt6.QtGui import QClipboard 
         from PyQt6.QtCore import QMimeData
         mimdat = QMimeData()
-        mimdat.setText(self.code_string.text())
+        mimdat.setText(self.code_string.toPlainText())
         clipboard = QApplication.clipboard()
         clipboard.setMimeData(mimdat,mode=QClipboard.Mode.Clipboard)
 

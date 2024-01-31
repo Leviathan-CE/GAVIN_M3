@@ -58,13 +58,13 @@ class EventObserver():
                event:OnTextLoaded = EventObserver._listeners[i]
                event.On_text_input_loaded(text, event)
     
-    def sub_event(listeners: Event):
+    def sub_event(self,listeners: Event):
         if not EventObserver._listeners.__contains__(listeners):
             EventObserver._listeners.append(listeners)
 
     
 
-    def unsub_event(listeners: Event):
+    def unsub_event(self,listeners: Event):
         if EventObserver._listeners.__contains__(listeners):
             EventObserver._listeners.append(listeners)
 

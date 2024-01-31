@@ -36,6 +36,7 @@ class TextInputBar(QTextEdit, EventObserver):
         if event_control != None and event.key() == 16777220:
             event_control = None
             self.invoke_On_text_changed(self.toPlainText(), self)
+            self.invoke_On_text_loaded(self.toPlainText(),self)
             self.setText("")
         else:
             super().keyPressEvent(event)

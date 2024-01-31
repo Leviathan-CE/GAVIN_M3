@@ -68,7 +68,8 @@ g
     from src.data.Paths import MD_CONTENT
     from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
     from src.gui.widgets.TextInputBar import TextInputBar
-    from src.GAVIN import GAVIN_MODEL_M3
+    from src.GAVIN import ModelFoundation
+    from src.api.EventHandler import EventObserver
    
     def ismaxed():
         print("tolo")
@@ -79,12 +80,17 @@ g
     app = QApplication(sys.argv)
     btn = form()
     
-    test = GAVIN_MODEL_M3() 
+    
+    test = ModelFoundation() 
     btn.setFixedSize(600,800) 
     scrol_view = ViewPort(600, 400)
+  
     input = TextInputBar(600)
     viewer = MarkdownLatexViewer(
         markdown_content)
+    
+    input.sub_event(listeners=scrol_view)
+    
     
     btn.setCenterWidget(scrol_view)
     

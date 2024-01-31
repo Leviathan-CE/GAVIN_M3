@@ -1,6 +1,7 @@
 '''
 containts base layout from
 '''
+
 from PyQt6.QtWidgets import (
     QWidget,
     QVBoxLayout,
@@ -12,10 +13,11 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt
 from src.data.Settings import MAX_VIEW_WIDTH
+from src.api.EventHandler import OnTextLoaded
 
 
 
-class ScrollableWidget(QScrollArea):
+class ScrollableWidget(QScrollArea, OnTextLoaded):
 
     def __init__(self, width: int, height: int):
         super().__init__()
@@ -45,7 +47,7 @@ class ScrollableWidget(QScrollArea):
         
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
-class ViewPort(ScrollableWidget):
+class ViewPort(ScrollableWidget, OnTextLoaded):
     '''
     chat history view port 
     '''
@@ -77,7 +79,13 @@ class ViewPort(ScrollableWidget):
         add a new item to the history
         '''
         self.v_layout.addWidget(item, 1)
-        #item.adjustSize()
+    
+   
+    def On_text_input_loaded(self, text: str, event):
+        from src.gui.widgets.MessageTypes import MessageWidget
+        Message = MessageWidget(text)
+        self.add_widget(Message)
+        #scroll to bottom after rendering has be done.
 
 
    
