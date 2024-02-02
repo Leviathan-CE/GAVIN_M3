@@ -68,7 +68,7 @@ g
     from src.data.Paths import MD_CONTENT
     from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
     from src.gui.widgets.TextInputBar import TextInputBar
-    from src.GAVIN import ModelFoundation
+    from src.GAVIN import ModelFoundation, GavinMarkI
     from src.api.EventHandler import EventObserver
    
     def ismaxed():
@@ -81,7 +81,8 @@ g
     btn = form()
     
     
-    test = ModelFoundation() 
+    test = GavinMarkI()
+    test.active_model = GavinMarkI.MODEL 
     btn.setFixedSize(600,800) 
     scrol_view = ViewPort(600, 400)
   
@@ -99,14 +100,14 @@ g
     btn.layout().setAlignment(input, Qt.AlignmentFlag.AlignHCenter)
     btn.layout().setAlignment(scrol_view, Qt.AlignmentFlag.AlignHCenter)
 
-    code_block = CodeBlock(markdown_content)
-    scrol_view.add_widget(code_block)
+    # code_block = CodeBlock(markdown_content)
+    # scrol_view.add_widget(code_block)
     
     btn.btn_min_max.clicked.connect(ismaxed)
     
     
-    msg = MessageWidget(markdown_content)
-    scrol_view.add_widget(msg)
+    # msg = MessageWidget(markdown_content)
+    # scrol_view.add_widget(msg)
     
     file = open(GUI_STYLES+"\\dark_mode.css","r")  
     app.setStyleSheet(file.read())

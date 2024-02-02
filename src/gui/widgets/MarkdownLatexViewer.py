@@ -16,6 +16,7 @@ class MarkdownLatexViewer(QMainWindow):
         # Create a web engine view to display complex HTML content
         self.webview = QWebEngineView()
         self.setMinimumHeight(50)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         # self.setMaximumWidth(MAX_VIEW_WIDTH)
         # self.webview.setMaximumWidth(MAX_VIEW_WIDTH)
         self.webview.page().loadFinished.connect(self.on_load_finished)
@@ -73,7 +74,7 @@ class MarkdownLatexViewer(QMainWindow):
     def on_load_finished(self, ok):
         # Adjust the minimum size based on the content size
         if ok:            
-            size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,50))
+            size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,70))
             self.setMinimumHeight(size.height())            
             self.webview.setMinimumHeight(size.height())
            
