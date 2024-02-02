@@ -2,6 +2,39 @@ from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QApplication, QMainWindow, QVBoxLayout, QScrollArea, QLabel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
+html_with_mathjax = fr"""
+ <html>
+        <head>
+        
+        <meta charset="utf-8">       
+       
+                  <script>
+        document.addEventListener("DOMContentLoaded", function() {{
+          
+            var style = document.createElement('style');
+            style.innerHTML = 'body {{ background-color: rgb(15, 15,15); color: white; }}';
+            document.head.appendChild(style);
+        }});
+    </script> 
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({{ tex2jax: {{
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            }}
+        }});       
+        </script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>       
+
+        </head>
+        <body>
+        <div>
+         $x^2=3$ $$xe^x$$
+        </div>
+        </body>
+        </html>
+        """
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -15,7 +48,7 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(central_layout)
 
         # Add regular widgets to the layout (for demonstration purposes)
-        label1 = QLabel("Regular Label 1")
+        label1 = QLabel(html_with_mathjax)
         central_layout.addWidget(label1)
 
         label2 = QLabel("Regular Label 2")

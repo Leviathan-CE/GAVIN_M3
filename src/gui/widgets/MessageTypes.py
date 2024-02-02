@@ -1,7 +1,7 @@
 
 from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QFrame, QSizePolicy, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, QSpacerItem
 from PyQt6.QtCore import Qt, QSize
-
+from src.gui.widgets import ChatHistory
 
 class MessageWidget(QWidget):
     """
@@ -9,7 +9,7 @@ class MessageWidget(QWidget):
     then displays them using code and markdown latex widgets
     """
     
-    def __init__(self, message:str):
+    def __init__(self, message:str, chathist:ChatHistory.ViewPort):
         super().__init__()
         from src.gui.InputParser import get_text_blocks
         from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
@@ -17,7 +17,7 @@ class MessageWidget(QWidget):
         self.setLayout(layout)
         blocks:list[dict[str,str]] = get_text_blocks(message)
         self.setSizePolicy(QSizePolicy.Policy.Expanding,
-                            QSizePolicy.Policy.Expanding)
+                            QSizePolicy.Policy.Minimum)
         
         
         for blk in blocks:           
@@ -25,7 +25,7 @@ class MessageWidget(QWidget):
                 if blk['type'] == "code":
                     layout.addWidget(CodeBlock(blk['content']))
                 if blk['type'] == "text":
-                    layout.addWidget(MarkdownLatexViewer(blk['content']))
+                    layout.addWidget(MarkdownLatexViewer(blk['content'], chathist))
 
           
 

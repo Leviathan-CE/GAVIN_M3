@@ -11,21 +11,25 @@ from src.data.profiles import (
 MODEL_FOUNDATION = "gpt-3.5"
 MODEL_GAVIN_MI = "GAVIN_M1"
 
-class ModelFoundation(OnTextChanged, EventObserver):
+
+class FoundationModel(OnTextChanged):
     
     active_model = MODEL_FOUNDATION
     def __init__(self):
-        EventObserver.sub_event(self,listeners=self)
+       self.eventhandler = EventObserver()
+       self.eventhandler.sub_event(listeners=self)
     
     def On_text_input_changed(self,text:str, event):
         print(f"{text} + it worked")
     
     def invoke_On_text_loaded(self, text: str, event):
-        return super().invoke_On_text_loaded(text, event)
+        self.eventhandler.invoke_On_text_loaded(text, event)
 
     def text_to_prompt(self,text) ->dict:
         return {"role": "user", "content": text}
-class GavinMarkI(ModelFoundation):
+
+
+class GavinMarkI(FoundationModel):
     
     MODEL = "GAVIN_M1"
     def __init__(self):
@@ -43,8 +47,10 @@ class GavinMarkI(ModelFoundation):
             print("ORGANIZATION Not Found")
     
     def On_text_input_changed(self, text: str, event):
+        print(type(self))
         if self.active_model == self.MODEL:
-            self.invoke_On_text_loaded(self.generate(text=text), event=self)
+            self.invoke_On_text_loaded(text, event)
+            self.invoke_On_text_loaded(f"{self.generate(text=text)}",self)
 
     
     

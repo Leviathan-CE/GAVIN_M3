@@ -49,14 +49,14 @@ class EventObserver():
         '''
         for i in range(0,len(EventObserver._listeners)):
             if isinstance(EventObserver._listeners[i], OnTextChanged):
-               event:OnTextChanged = EventObserver._listeners[i]
-               event.On_text_input_changed(text, event)
+               events:OnTextChanged = EventObserver._listeners[i]
+               events.On_text_input_changed(text, event)
 
     def invoke_On_text_loaded(self,text: str, event):
         for i in range(0,len(EventObserver._listeners)):
             if isinstance(EventObserver._listeners[i], OnTextLoaded):
-               event:OnTextLoaded = EventObserver._listeners[i]
-               event.On_text_input_loaded(text, event)
+               events:OnTextLoaded = EventObserver._listeners[i]
+               events.On_text_input_loaded(text, event)
     
     def sub_event(self,listeners: Event):
         if not EventObserver._listeners.__contains__(listeners):
