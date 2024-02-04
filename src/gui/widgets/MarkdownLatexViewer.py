@@ -47,7 +47,7 @@ class MarkdownLatexViewer(QWidget):
         document.addEventListener("DOMContentLoaded", function() {{
           
             var style = document.createElement('style');
-            style.innerHTML = 'body {{ background-color: rgb(15, 15,15); color: white; }}';
+            style.innerHTML = 'body {{ background-color: rgb(20, 20,20); color: white; }}';
             document.head.appendChild(style);
         }});
     </script> 
