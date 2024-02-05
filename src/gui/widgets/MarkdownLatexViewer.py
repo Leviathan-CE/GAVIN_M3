@@ -129,3 +129,11 @@ class MarkdownLatexViewer(QWidget):
         #     print(f"after: web: {contents_size} widg: {widget_h}")
 
 
+class MarddownLatexViewer2(QTextEdit):
+    '''
+    supose to replace v1 so that we can scroll and still 
+    copy paste text without issue and to be slightly faster 
+    to render and possibly allow to continual rendering.
+    '''
+    def __init__(self, html_file:str):
+        super().__init__()
