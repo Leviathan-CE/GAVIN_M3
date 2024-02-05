@@ -8,11 +8,11 @@ QWidget {
 }
 
 QTextEdit#textinput {
-    background-color: rgb(5, 5, 5);
+    background-color: rgb(10, 10, 10);
     border-style: outset;
     border-radius: 10px;
     border-width: 0px;
-    border-color: rgb(5, 5, 5);
+    border-color: rgb(10, 10, 10);
     color: white;
     padding-left: 5px;
     padding-right: 5px;

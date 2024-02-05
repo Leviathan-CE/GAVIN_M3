@@ -14,7 +14,7 @@ class MarkdownLatexViewer(QWidget):
     
     """
     def __init__(self, markdown_content:str, chathist:ChatHistory.ViewPort):
-        super().__init__()
+        super().__init__(chathist)
         # Create a web engine view to display complex HTML content
         self.chat_hist = chathist
         layout = QVBoxLayout()
@@ -24,7 +24,7 @@ class MarkdownLatexViewer(QWidget):
         
         self.setMinimumHeight(50) 
         
-        #self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
         # self.setMaximumWidth(MAX_VIEW_WIDTH)
         # self.webview.setMaximumWidth(MAX_VIEW_WIDTH)

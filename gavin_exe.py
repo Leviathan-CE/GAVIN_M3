@@ -41,6 +41,7 @@ contents_sizecontents_size
         EventHandlerPushMessages,
         EventHandlerWindowSize
     )
+    from PyQt6.QtWidgets import QVBoxLayout
 if __name__ == "__main__":
     eventhandlers: list = [EventObserver(),
                            EventHandlerWindowSize(),
@@ -48,29 +49,33 @@ if __name__ == "__main__":
                            EventHandlerPushMessages()]
 
     app = QApplication(sys.argv)
-    btn = form()
-    btn.move((btn.pos().x()/2).__round__(),
-             (btn.pos().y()/2).__round__())
+    form_main = form()
+    form_main.move((form_main.pos().x()/2).__round__(),
+             (form_main.pos().y()/2).__round__())
 
-    btn.setFixedSize(600, 800)
-    scrol_view = ViewPort(600, 400)
-
-    input = TextInputBar(600)
-
-    test = GavinMarkI()
-    test.active_model = GavinMarkI.MODEL
+    form_main.setFixedSize(600, 800)
+    chat_scrol_view = ViewPort(550, 350)
+    margins = QWidget()    
+    input_text_bar = TextInputBar(500)
+    llm_model = GavinMarkI()
+    llm_model.active_model = GavinMarkI.MODEL
 
     # for what ever reason if vewier is not populated
     # then wierd minimize glitch occurs.
-    viewer = MarkdownLatexViewer(
-        "", scrol_view)
-    scrol_view.add_widget(viewer)
+    empty_message = MarkdownLatexViewer(
+        "", chat_scrol_view)
+    empty_message.setMaximumHeight(0)
+    chat_scrol_view.add_widget(empty_message)
+    margins.setContentsMargins(10,0,10,10)
 
-    btn.setCenterWidget(scrol_view)
+    form_main.setCenterWidget(margins)
+    margins.setLayout(QVBoxLayout())
+    margins.layout().addWidget(chat_scrol_view)
+    margins.layout().addWidget(input_text_bar)
+    
 
-    btn.layout().addWidget(input)
-    btn.layout().setAlignment(input, Qt.AlignmentFlag.AlignHCenter)
-    btn.layout().setAlignment(scrol_view, Qt.AlignmentFlag.AlignHCenter)
+    margins.layout().setAlignment(input_text_bar, Qt.AlignmentFlag.AlignHCenter)
+    margins.layout().setAlignment(chat_scrol_view, Qt.AlignmentFlag.AlignHCenter)
 
 
     file = open(GUI_STYLES+"\\dark_mode.css", "r")
