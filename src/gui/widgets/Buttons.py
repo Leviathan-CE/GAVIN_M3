@@ -8,7 +8,8 @@ from PyQt6.QtWidgets import (
 from src.data.Paths import GUI_IMGS
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
-
+from src.api.EventHandler import EventHandlerWindowSize, OnWindowResized
+from src.data import WindowHints
 
 
 BUTTON_DEFAULT_SIZE = [48, 48]
@@ -45,7 +46,10 @@ class BTNHide(Button):
         self.clicked.connect(self.hide)
 
     def hide(self):
-        QApplication.activeWindow().hide()
+        QApplication.activeWindow().hide() 
+       
+        EventHandlerWindowSize().invoke_on_window_size_changed(WindowHints.TO_MINIMIZED,self)
+        
 
 
 class BTNMinMax(Button):
@@ -61,10 +65,14 @@ class BTNMinMax(Button):
         if QApplication.activeWindow().isMaximized():
             self.setText("[  ]")
             QApplication.activeWindow().showNormal()
+            EventHandlerWindowSize().invoke_on_window_size_changed(
+                WindowHints.TO_NORMAL, self)
            # QApplication.activeWindow().showMaximized()
         else:
             self.setText("[]")
             QApplication.activeWindow().showMaximized()
+            EventHandlerWindowSize().invoke_on_window_size_changed(
+                WindowHints.TO_MAXIMIZIED, self)
 
 
 class BTNMenu(Button):
@@ -81,6 +89,8 @@ class BTNMenu(Button):
 
     def open_menu(self):
         print("menu button pressed")
+        EventHandlerWindowSize().invoke_on_window_size_changed(
+            WindowHints.TO_MINI_PLAYER, self)
 
 
 class BTNClipboardCopy(Button):

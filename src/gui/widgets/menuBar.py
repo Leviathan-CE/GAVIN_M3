@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import QEvent, QSize, Qt, QPoint, QPointF
 from PyQt6.QtGui import QIcon, QAction, QMouseEvent
 from src.data.Paths import GUI_IMGS
+from src.data import WindowHints
 
 
 
@@ -61,9 +62,13 @@ class ToolBarHeader(QToolBar):
     user to click and drag window around 
     '''
     def __init__(self):
-        super().__init__()      
+        super().__init__() 
+        
+       
+             
         self.setIconSize(QSize(48,48))
         self.setMaximumHeight(48)
+        
         
        
         
@@ -91,7 +96,9 @@ class ToolBarHeader(QToolBar):
         # TODO:need tyo make work with multiple screens
         if new_delta.y() < 2 and not QApplication.activeWindow().isMaximized():
                     QApplication.activeWindow().showMaximized()
-                    QApplication.activeWindow().window
+                    from src.api.EventHandler import EventHandlerWindowSize
+                    EventHandlerWindowSize().invoke_on_window_size_changed(WindowHints.TO_MAXIMIZIED,self)
+                    QApplication.activeWindow().window()
                 
 
     
@@ -108,6 +115,9 @@ class ToolBarHeader(QToolBar):
         #   print(event.globalPosition())  
           if QApplication.activeWindow().isMaximized():
                 QApplication.activeWindow().showNormal()
+                from src.api.EventHandler import EventHandlerWindowSize
+                EventHandlerWindowSize().invoke_on_window_size_changed(
+                    WindowHints.TO_NORMAL, self)
                 # TODO: need tyo make work with multiple screens
                 #self.window().move(int(event.globalPosition().x()/2)+event.pos().x(), int(event.globalPosition().y()))
                 self.window().move(QPoint(int(event.pos().x()/2), event.pos().y()))

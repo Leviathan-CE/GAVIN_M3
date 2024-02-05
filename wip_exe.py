@@ -16,7 +16,7 @@ if __name__ == "__main__":
     markdown_content = """
 # hi lo
 contents_size
-contents_size
+contents_sizewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 contents_size
 
 contents_size
@@ -36,9 +36,18 @@ contents_sizecontents_size
     from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
     from src.gui.widgets.TextInputBar import TextInputBar
     from src.GAVIN import FoundationModel, GavinMarkI
-    from src.api.EventHandler import EventObserver
+    from src.api.EventHandler import (
+        EventObserver,
+        EvenHandlerInputText,
+        EventHandlerPushMessages,
+        EventHandlerWindowSize
+        )
 
-    eventhandler = EventObserver()
+    eventhandlers:list = [EventObserver(),
+                          EventHandlerWindowSize(),
+                          EvenHandlerInputText(),
+                          EventHandlerPushMessages()]
+    
     app = QApplication(sys.argv)
     btn = form()
     btn.move((btn.pos().x()/2).__round__(), (btn.pos().y()/2).__round__())
@@ -53,9 +62,11 @@ contents_sizecontents_size
     test = GavinMarkI()
     test.active_model = GavinMarkI.MODEL 
     
-    # viewer = MarkdownLatexViewer(
-    #     markdown_content,scrol_view) 
-    # scrol_view.add_widget(viewer)
+    #for what ever reason if vewier is not populated 
+    #then wierd minimize glitch occurs.
+    viewer = MarkdownLatexViewer(
+        "",scrol_view) 
+    scrol_view.add_widget(viewer)
     
     
     

@@ -140,5 +140,11 @@ class TrayIcon(QSystemTrayIcon):
         self.tray_menu.addAction("Restore", mainWindow.showNormal)
         self.tray_menu.addAction("Quit", mainWindow.exit)
         self.setContextMenu(self.tray_menu)
-
+        self.activated.connect(self.on_tray_icon_activated)
         print("try icon made")
+    
+    def on_tray_icon_activated(self, reason):
+        if reason == QSystemTrayIcon.ActivationReason.Trigger:
+            from src.data import WindowHints
+            from src.api.EventHandler import EventHandlerWindowSize
+            EventHandlerWindowSize().invoke_on_window_size_changed(WindowHints.TO_NORMAL, self)

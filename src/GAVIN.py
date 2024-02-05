@@ -1,6 +1,6 @@
 
 
-from src.api.EventHandler import OnTextChanged, EventObserver
+from src.api.EventHandler import OnTextChanged,EventHandlerPushMessages
 from src.data.profiles import (
             ROLE,
             TOKEN_MULTIPLYER,
@@ -16,14 +16,14 @@ class FoundationModel(OnTextChanged):
     
     active_model = MODEL_FOUNDATION
     def __init__(self):
-       self.eventhandler = EventObserver()
+       self.eventhandler = EventHandlerPushMessages()
        self.eventhandler.sub_event(listeners=self)
     
     def On_text_input_changed(self,text:str, event):
         print(f"{text} + it worked")
     
-    def invoke_On_text_loaded(self, text: str, event):
-        self.eventhandler.invoke_On_text_loaded(text, event)
+    def invoke_on_push_message(self, text: str, event):
+        self.eventhandler.invoke_on_push_message(text, event)
 
     def text_to_prompt(self,text) ->dict:
         return {"role": "user", "content": text}
@@ -48,9 +48,9 @@ class GavinMarkI(FoundationModel):
     
     def On_text_input_changed(self, text: str, event):
         print(type(self))
-        if self.active_model == self.MODEL:
-            self.invoke_On_text_loaded(text, event)
-            self.invoke_On_text_loaded(f"{self.generate(text=text)}",self)
+        if self.active_model == self.MODEL and not isinstance(event,GavinMarkI):
+            self.invoke_on_push_message(text, event)
+            self.invoke_on_push_message(f"{self.generate(text=text)}", self)
 
     
     

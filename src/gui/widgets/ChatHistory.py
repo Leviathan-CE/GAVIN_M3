@@ -12,10 +12,11 @@ from PyQt6.QtWidgets import (
     QSizePolicy,
 )
 from PyQt6.QtCore import Qt
+from src.data import WindowHints
 from src.data.Settings import MAX_VIEW_WIDTH
-from src.api.EventHandler import OnTextLoaded, EventObserver
+from src.api.EventHandler import OnPushMessageToDisplay, EventHandlerPushMessages, OnWindowResized
 
-
+from src.GAVIN import FoundationModel
 
 class ScrollableWidget(QScrollArea):
 
@@ -54,14 +55,14 @@ class ScrollableWidget(QScrollArea):
         
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
-class ViewPort(ScrollableWidget, OnTextLoaded):
+class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
     '''
     chat history view port 
     '''
 
     def __init__(self, width: int, height: int):
         super().__init__(width, height)
-        evenhandler = EventObserver()
+        evenhandler = EventHandlerPushMessages()
         evenhandler.sub_event(self)
         self.setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.setSizePolicy(QSizePolicy.Policy.Expanding,
@@ -72,6 +73,9 @@ class ViewPort(ScrollableWidget, OnTextLoaded):
         print("scroll to bottom")
 
     def clear_all(self):
+        '''
+        clear all messages from display
+        '''
         print(self.v_layout.count())
         while self.v_layout.count():
             item = self.v_layout.takeAt(0)
@@ -89,16 +93,22 @@ class ViewPort(ScrollableWidget, OnTextLoaded):
         '''
         self.v_layout.addWidget(item, 1)
     
-   
-    def On_text_input_loaded(self, text: str, event):
+    def on_push_message(self, text: str, event):
         from src.gui.widgets.MessageTypes import MessageWidget
         from src.gui.widgets import TextInputBar
-        from src.GAVIN import FoundationModel
-    
         if isinstance(event, FoundationModel) or isinstance(event, TextInputBar.TextInputBar):
             Message = MessageWidget(text, self)
-            self.add_widget(Message)
-        
-
+            self.add_widget(Message)    
+    
+    from src.data import WindowHints   
+    def on_window_resize(self, hint: WindowHints, event):
+        if hint == WindowHints.TO_MINIMIZED:
+            print("minimized")
+        if hint == WindowHints.TO_MAXIMIZIED:
+            print("amximized")
+        if hint == WindowHints.TO_NORMAL:
+            print("normalized")
+        if hint == WindowHints.TO_MINI_PLAYER:
+            print("minplayerized")
 
    

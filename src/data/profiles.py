@@ -1,6 +1,6 @@
 
 '''
-profile constant 
+profile constants 
 '''
 #-----User Profile-----------
 USER_NAME = "ADMIN"

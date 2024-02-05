@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import  QSizePolicy, QApplication, QMainWindow, QVBoxLayout, QTextEdit, QWidget
 from PyQt6.QtGui import QTextCursor, QKeyEvent
 from PyQt6.QtCore import Qt, QEvent
-from src.api.EventHandler import EventObserver
+from src.api.EventHandler import EvenHandlerInputText
 
 class TextInputBar(QTextEdit):
   
@@ -11,13 +11,13 @@ class TextInputBar(QTextEdit):
     def __init__(self, width:int = 400):
         super().__init__()
         
-        self.evenhandler = EventObserver()
+        self.evenhandler = EvenHandlerInputText()
         self.setObjectName("textinput")     
         self.setFixedHeight(30)              
         self.setMaximumHeight(30)
         self.setMinimumWidth(width)
         self.setMaximumWidth(width)
-        self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.MinimumExpanding)
+        self.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
         self.setPlaceholderText("Enter prompt here... cntrl+enter to send")
         self.textChanged.connect(self._updateTextEditHeight)
         
@@ -38,6 +38,7 @@ class TextInputBar(QTextEdit):
             event_control = None
             txt = self.toPlainText()
             self.setText("")
+            
             self.evenhandler.invoke_On_text_changed(txt,self)
             #self.invoke_On_text_loaded(self.toPlainText(),self)   
         else:

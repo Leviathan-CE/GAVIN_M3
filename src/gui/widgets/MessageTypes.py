@@ -1,6 +1,6 @@
 
 from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QFrame, QSizePolicy, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, QSpacerItem
-from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import QEvent, Qt, QSize
 from src.gui.widgets import ChatHistory
 
 class MessageWidget(QWidget):
@@ -16,8 +16,7 @@ class MessageWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         blocks:list[dict[str,str]] = get_text_blocks(message)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding,
-                            QSizePolicy.Policy.Minimum)
+        #self.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.MinimumExpanding)
         
         
         for blk in blocks:           
@@ -27,7 +26,7 @@ class MessageWidget(QWidget):
                 if blk['type'] == "text":
                     layout.addWidget(MarkdownLatexViewer(blk['content'], chathist))
 
-          
+    
 
 
 class CodeBlock(QWidget):
@@ -63,6 +62,11 @@ class CodeBlock(QWidget):
    
 
     def copy_to_clipboard(self):
+        '''
+        copies text inside the block to windows clipboard for 
+        use of shrotcuts to paste elsewere does not copy html
+        just raw text.
+        '''
         from PyQt6.QtGui import QClipboard 
         from PyQt6.QtCore import QMimeData
         mimdat = QMimeData()
