@@ -16,7 +16,7 @@ from src.data import WindowHints
 from src.data.Settings import MAX_VIEW_WIDTH
 from src.api.EventHandler import OnPushMessageToDisplay, EventHandlerPushMessages, OnWindowResized
 
-from src.GAVIN import FoundationModel
+
 
 class ScrollableWidget(QScrollArea):
 
@@ -96,6 +96,7 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
     def on_push_message(self, text: str, event):
         from src.gui.widgets.MessageTypes import MessageWidget
         from src.gui.widgets import TextInputBar
+        from src.models.Gavin import FoundationModel
         if isinstance(event, FoundationModel) or isinstance(event, TextInputBar.TextInputBar):
             Message = MessageWidget(text, self)
             self.add_widget(Message)    

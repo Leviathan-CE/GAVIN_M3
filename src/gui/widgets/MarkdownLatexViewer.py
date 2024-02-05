@@ -37,7 +37,7 @@ class MarkdownLatexViewer(QWidget):
         # Add MathJax script to the HTML content for LaTeX rendering
         # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
         # web mathjax https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML
-        html_with_mathjax = fr"""
+        html_with_mathjax = f"""
  <html>
         <head>
         
@@ -53,8 +53,8 @@ class MarkdownLatexViewer(QWidget):
     </script> 
         <script type="text/x-mathjax-config">
         MathJax.Hub.Config({{ tex2jax: {{
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             }}
         }});       
