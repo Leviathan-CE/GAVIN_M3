@@ -35,7 +35,7 @@ contents_sizecontents_size
     from src.data.Paths import MD_CONTENT
     from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
     from src.gui.widgets.TextInputBar import TextInputBar
-    from src.models.GAVIN import FoundationModel, GavinMarkI
+    from src.models.Gavin import FoundationModel, GavinMarkI
     from src.api.EventHandler import (
         EventObserver,
         EvenHandlerInputText,
