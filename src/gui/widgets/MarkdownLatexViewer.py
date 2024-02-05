@@ -5,7 +5,6 @@ from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
 from PyQt6.QtCore import Qt
 from src.data.Paths import ROOT
-from src.data.Settings import MAX_VIEW_WIDTH
 from src.gui.widgets import ChatHistory
 class MarkdownLatexViewer(QWidget):
     """_summary_

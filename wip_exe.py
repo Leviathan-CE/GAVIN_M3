@@ -1,5 +1,5 @@
 from src.gui.widgets.Buttons import BTNMenu
-from src.gui.widgets.Widgets import form
+from src.gui.widgets.Form import form
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget
@@ -54,11 +54,8 @@ contents_sizecontents_size
     
 
     btn.setFixedSize(600,800) 
-    scrol_view = ViewPort(600, 400)
-  
-    input = TextInputBar(600)
-    
-    
+    scrol_view = ViewPort(600, 400)  
+    input = TextInputBar(600)    
     test = GavinMarkI()
     test.active_model = GavinMarkI.MODEL 
     

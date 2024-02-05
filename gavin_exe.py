@@ -1,5 +1,5 @@
 from src.gui.widgets.Buttons import BTNMenu
-from src.gui.widgets.Widgets import form
+from src.gui.widgets.Form import form
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget

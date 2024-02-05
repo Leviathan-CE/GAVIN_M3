@@ -13,7 +13,6 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt
 from src.data import WindowHints
-from src.data.Settings import MAX_VIEW_WIDTH
 from src.api.EventHandler import OnPushMessageToDisplay, EventHandlerPushMessages, OnWindowResized
 
 
