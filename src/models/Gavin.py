@@ -50,7 +50,12 @@ class GavinMarkI(FoundationModel):
         print(type(self))
         if self.active_model == self.MODEL and not isinstance(event,GavinMarkI):
             self.invoke_on_push_message(text, event)
-            self.invoke_on_push_message(f"{self.generate(text=text)}", self)
+            response = self.generate(text=text)
+            from src.data.DataBase import DataBase
+            db = DataBase()
+            db.insert(self.MODEL,response)
+            db.close()
+            self.invoke_on_push_message(response, self)
 
     
     
@@ -81,6 +86,6 @@ class GavinMarkI(FoundationModel):
 
         #format gpt response
         response = {"role": "assistant", "content":response.choices[0].message.content} # type: ignore
-       
+
         #return only the content
         return response["content"]

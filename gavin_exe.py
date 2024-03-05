@@ -41,6 +41,7 @@ if __name__ == "__main__":
 
     form_main.setFixedSize(600, 800)
     chat_scrol_view = ViewPort(550, 350)
+    chat_scrol_view.load_from_db(5)
     margins = QWidget()    
     input_text_bar = TextInputBar(500)
     llm_model = GavinMarkI()

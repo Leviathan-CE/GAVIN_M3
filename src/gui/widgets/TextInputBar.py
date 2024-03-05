@@ -37,6 +37,11 @@ class TextInputBar(QTextEdit):
         if event_control != None and event.key() == 16777220:
             event_control = None
             txt = self.toPlainText()
+            from src.data.DataBase import DataBase
+            from src.data.profiles import USER_NAME
+            db = DataBase()
+            db.insert(USER_NAME,txt)
+            db.close()
             self.setText("")
             
             self.evenhandler.invoke_On_text_changed(txt,self)
