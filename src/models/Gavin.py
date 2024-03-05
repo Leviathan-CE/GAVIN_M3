@@ -73,11 +73,11 @@ class GavinMarkI(FoundationModel):
         #generate response with context history
         #---------the chat-----------------
         response = openai.chat.completions.create( # type: ignore
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo", 
         messages = [pmt2,pmt],
         #top_p= 1,  
         temperature=.45, #.6
-        max_tokens= TOKEN_LIMIT*TOKEN_MULTIPLYER,
+        max_tokens= TOKEN_LIMIT*TOKEN_MULTIPLYER, #max 4096
         user=USER_NAME,
         frequency_penalty= .1, #.2
         presence_penalty=.1) #.2
