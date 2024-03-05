@@ -1,10 +1,8 @@
 import sqlite3
 import os
-class DataBase():
+class DataBase():   
     
-
-    _message_count:int = 0
-    
+ 
     def __init__(self, name:str="Leviathan_local") -> None:  
         self._connection = None
         self._cursor = None          
@@ -40,6 +38,12 @@ class DataBase():
     def get_last(self,num:int):
         self._cursor.execute(f'''
                              SELECT * FROM messages ORDER by id DESC LIMIT {num};
+                             ''')
+        return self._cursor.fetchall()
+    
+    def get(self, num:int):
+        self._cursor.execute(f'''
+                             SELECT * FROM messages ORDER by id LIMIT {num};
                              ''')
         return self._cursor.fetchall()
         
