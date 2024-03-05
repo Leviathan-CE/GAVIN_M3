@@ -11,38 +11,24 @@ from PyQt6.QtCore import Qt
 from src.data.Paths import GUI_STYLES
 
 
-if __name__ == "__main__":
-    markdown_content = """
-# hi lo
-contents_size
-contents_sizewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-contents_size
-
-contents_size
-contents_size
-contents_size
-
-contents_sizecontents_size
-contents_sizecontents_size
-
-"""
-#![yup](src/gui/imgs/icon.png)
-    import sys
-    import os
-    from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
-    from src.gui.widgets.ChatHistory import ScrollableWidget, ViewPort
-    from src.data.Paths import MD_CONTENT
-    from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
-    from src.gui.widgets.TextInputBar import TextInputBar
-    from src.models.Gavin import FoundationModel, GavinMarkI
-    from src.api.EventHandler import (
+import sys
+import os
+from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
+from src.gui.widgets.ChatHistory import ScrollableWidget, ViewPort
+from src.data.Paths import MD_CONTENT
+from src.gui.widgets.MessageTypes import CodeBlock, MessageWidget
+from src.gui.widgets.TextInputBar import TextInputBar
+from src.models.Gavin import FoundationModel, GavinMarkI
+from src.api.EventHandler import (
         EventObserver,
         EvenHandlerInputText,
         EventHandlerPushMessages,
         EventHandlerWindowSize
     )
-    from PyQt6.QtWidgets import QVBoxLayout
+from PyQt6.QtWidgets import QVBoxLayout
 if __name__ == "__main__":
+    
+    
     eventhandlers: list = [EventObserver(),
                            EventHandlerWindowSize(),
                            EvenHandlerInputText(),

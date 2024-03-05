@@ -23,7 +23,7 @@ class MarkdownLatexViewer(QWidget):
         
         self.setMinimumHeight(50) 
         
-        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        #self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
         # self.setMaximumWidth(MAX_VIEW_WIDTH)
         # self.webview.setMaximumWidth(MAX_VIEW_WIDTH)
@@ -64,7 +64,7 @@ class MarkdownLatexViewer(QWidget):
         </head>
         <body>
         <div>
-        {html_content}
+        {fr"{html_content}"}
         </div>
         </body>
         </html>
