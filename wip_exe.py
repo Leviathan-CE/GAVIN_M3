@@ -1,5 +1,5 @@
 from src.gui.widgets.Buttons import BTNMenu
-from src.gui.widgets.Form import form
+from src.gui.widgets.Form import Form, ApiKeyForm
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget
@@ -42,6 +42,7 @@ contents_sizecontents_size
         EventHandlerPushMessages,
         EventHandlerWindowSize
         )
+    from src.api.Exceptions import ApiKeyNotFoundException
 
     eventhandlers:list = [EventObserver(),
                           EventHandlerWindowSize(),
@@ -49,45 +50,53 @@ contents_sizecontents_size
                           EventHandlerPushMessages()]
     
     app = QApplication(sys.argv)
-    btn = form()
-    btn.move((btn.pos().x()/2).__round__(), (btn.pos().y()/2).__round__())
-    
+    def main():
+                test = GavinMarkI()
+                test.active_model = GavinMarkI.MODEL 
+                
+                btn = Form()   
+                btn.move((btn.pos().x()/2).__round__(), (btn.pos().y()/2).__round__())
+                    
 
-    btn.setFixedSize(600,800) 
-    scrol_view = ViewPort(600, 400)  
-    input = TextInputBar(600)    
-    test = GavinMarkI()
-    test.active_model = GavinMarkI.MODEL 
-    
-    #for what ever reason if vewier is not populated 
-    #then wierd minimize glitch occurs.
-    viewer = MarkdownLatexViewer(
-        "",scrol_view) 
-    scrol_view.add_widget(viewer)
-    
-    
-    
-    btn.setCenterWidget(scrol_view)
-    
-    
-    btn.layout().addWidget(input)
-    btn.layout().setAlignment(input, Qt.AlignmentFlag.AlignHCenter)
-    btn.layout().setAlignment(scrol_view, Qt.AlignmentFlag.AlignHCenter)
-    
-    # code_block = CodeBlock(markdown_content)
-    # scrol_view.add_widget(code_block)
+                btn.setFixedSize(600,800) 
+                scrol_view = ViewPort(600, 400)                  
+                input = TextInputBar(600)  
+                    
+                    #for what ever reason if vewier is not populated 
+                    #then wierd minimize glitch occurs.
+                viewer = MarkdownLatexViewer(
+                        "",scrol_view) 
+                scrol_view.add_widget(viewer)       
+                    
+                btn.setCenterWidget(scrol_view)       
+                btn.layout().addWidget(input)
+                btn.layout().setAlignment(input, Qt.AlignmentFlag.AlignHCenter)
+                btn.layout().setAlignment(scrol_view, Qt.AlignmentFlag.AlignHCenter)
+                file = open(GUI_STYLES+"\\dark_mode.css","r")  
+                app.setStyleSheet(file.read())
+                file.close()    
+                app.exec()
     
     
     
     
-    # msg = MessageWidget(markdown_content)
-    # scrol_view.add_widget(msg)
+    try:   
+            main()
+    except ApiKeyNotFoundException:
+            api_form = ApiKeyForm(main)
+            file = open(GUI_STYLES+"\\dark_mode.css","r")  
+            app.setStyleSheet(file.read())
+            file.close()    
+            app.exec()
+
+                
+                
+            
     
-    file = open(GUI_STYLES+"\\dark_mode.css","r")  
-    app.setStyleSheet(file.read())
-    file.close()    
-    app.exec()
-    
+   
+
+        
+
 
 
 

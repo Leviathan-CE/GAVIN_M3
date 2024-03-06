@@ -1,11 +1,12 @@
 
-
+from src.api.Exceptions import ApiKeyNotFoundException
 from src.api.EventHandler import OnTextChanged,EventHandlerPushMessages
 from src.data.profiles import (
             ROLE,
             TOKEN_MULTIPLYER,
             TOKEN_LIMIT,
-            USER_NAME
+            USER_NAME,
+            OPENAI_KEY_NAME
 )
 
 MODEL_FOUNDATION = "gpt-3.5"
@@ -37,15 +38,16 @@ class GavinMarkI(FoundationModel):
         import os
         super().__init__()
         try:
-             openai.api_key = os.getenv("OPEN_AI_KEY")
+             openai.api_key = os.getenv(OPENAI_KEY_NAME)
+             print(openai.api_key)
+
         except:
-            print("OPEN_AI_KEY  Not Found")
-        
-        try:
-            openai.organization = os.getenv("OPENAI_ORG")
-        except:
-            print("ORGANIZATION Not Found")
-    
+            print("eorors alll the errors")
+            # 
+            raise ApiKeyNotFoundException("open ai key not found")
+        if openai.api_key == None:
+                print("api not found")
+                raise ApiKeyNotFoundException
     def On_text_input_changed(self, text: str, event):
         print(type(self))
         if self.active_model == self.MODEL and not isinstance(event,GavinMarkI):

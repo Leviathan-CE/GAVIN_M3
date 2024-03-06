@@ -1,5 +1,5 @@
 from src.gui.widgets.Buttons import BTNMenu
-from src.gui.widgets.Form import form
+from src.gui.widgets.Form import Form
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget
@@ -9,7 +9,6 @@ import markdown
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtCore import Qt
 from src.data.Paths import GUI_STYLES
-
 
 import sys
 import os
@@ -35,7 +34,7 @@ if __name__ == "__main__":
                            EventHandlerPushMessages()]
 
     app = QApplication(sys.argv)
-    form_main = form()
+    form_main = Form()
     form_main.move((form_main.pos().x()/2).__round__(),
              (form_main.pos().y()/2).__round__())
 

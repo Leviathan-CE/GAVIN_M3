@@ -8,6 +8,7 @@ USER_NAME = "ADMIN"
 
 #---------AI Params----------
 AI_NAME = "GAVIN"
+OPENAI_KEY_NAME = "OPEN_AI_KEY"
 TOKEN_MULTIPLYER = 3
 TOKEN_LIMIT = 500
 ROLE = {"role" : "system",

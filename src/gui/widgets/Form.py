@@ -25,8 +25,10 @@ from src.gui.widgets.MenuBar import ToolBarHeader
 
 from src.data.Paths import GUI_IMGS           
 
-
-class form(QWidget):
+# ---------------------------------------------
+# -------------BLANK Form----------------------
+# ---------------------------------------------
+class Form(QWidget):
     '''
     blank window
     '''
@@ -48,7 +50,7 @@ class form(QWidget):
         self.btn_exit = BTNExit()        
              
         self.wdg_header.setMinimumHeight(self.btn_exit.height())     
-        self.setObjectName("form")
+        self.setObjectName("Form")
         self.setMinimumHeight(250)
         self.setMinimumWidth(350)
 
@@ -119,8 +121,11 @@ class form(QWidget):
     def exit(self):
         print("application terminated")
         QApplication.exit() 
-
-
+        
+        
+#---------------------------------------------
+#-------------SYS TRAY ICON-------------------
+#---------------------------------------------
 class TrayIcon(QSystemTrayIcon):
 
     '''
@@ -128,7 +133,7 @@ class TrayIcon(QSystemTrayIcon):
     when apps run in the back ground.
     '''
 
-    def __init__(self, icon: QIcon, mainWindow: form):
+    def __init__(self, icon: QIcon, mainWindow: Form):
         super().__init__()
         print("try icon start")
         # Create the system tray icon
@@ -148,3 +153,87 @@ class TrayIcon(QSystemTrayIcon):
             from src.data import WindowHints
             from src.api.EventHandler import EventHandlerWindowSize
             EventHandlerWindowSize().invoke_on_window_size_changed(WindowHints.TO_NORMAL, self)
+
+
+
+
+# ---------------------------------------------
+# -------------API KEY Form--------------------
+# ---------------------------------------------
+from PyQt6.QtWidgets import QVBoxLayout, QTextEdit, QLabel
+from src.gui.widgets.Buttons import Button
+from PyQt6.QtCore import Qt,QTimer
+import subprocess
+from src.data.profiles import OPENAI_KEY_NAME
+import openai
+import os, time
+class ApiKeyForm(Form):
+    
+    def __init__(self, function_main):
+        super().__init__()
+        self.main = function_main
+        self.label = QLabel("Please input your OpenAI api key")
+        self.inputbar = QTextEdit(self)
+        self.inputbar.setObjectName("textinput")
+        self.inputbar.setFixedHeight(30)
+        self.ok_button = Button(id="ok_button", size=[80,48])
+        self.ok_button.setFixedSize(80, 48)
+        self.ok_button.setText("Ok")
+        self.ok_button.clicked.connect(self.confirm_api_key)                   
+       
+        layout = QVBoxLayout()
+        layout.setContentsMargins(20,5,20,5)
+        center_widget = QWidget()
+        center_widget.setLayout(layout)
+        layout.addWidget(self.label)
+        layout.addWidget(self.inputbar)
+        layout.addWidget(self.ok_button)
+        layout.setAlignment(self.ok_button,Qt.AlignmentFlag.AlignHCenter)
+        
+        self.setCenterWidget(center_widget)
+        self.closeEvent = self.on_close
+        self.show()
+        
+    def on_close(self, event):
+        print("starting program.")
+        self.main()
+        event.accept()
+    
+    def confirm_api_key(self):
+        
+        self.label.setText("setting key...")
+        key = self.inputbar.toPlainText()
+        self.inputbar.clear        
+        subprocess.run(["setx", OPENAI_KEY_NAME,
+                                key])
+        try:
+             openai.api_key = os.getenv(OPENAI_KEY_NAME) 
+             print("key found")            
+        except:
+            self.label.setText("Please input your Api key")
+        
+ 
+        try:
+            #------------------------------------------------------
+             openai.chat.completions.create( #type:ignore
+                                            model="gpt-3.5-turbo",
+                 messages=[{"role": "user", "content": "this is a test"}],
+                                            temperature=.45,  # .6
+                                            max_tokens=1000,  # max 4096
+                                            user="User")
+             #-----------------------------------------------------
+             print("runing with it")
+            
+             
+             self.label.setText("Api key recognized; loading program... ")             
+             QTimer.singleShot(3000, self.close)
+             
+             
+        except Exception as e: 
+            print(e)
+            self.label.setText("Api key not valid please input a valid Api key")
+           
+        
+
+            
+        
