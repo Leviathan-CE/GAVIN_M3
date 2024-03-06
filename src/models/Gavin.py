@@ -42,12 +42,14 @@ class GavinMarkI(FoundationModel):
              print(openai.api_key)
 
         except:
-            print("eorors alll the errors")
-            # 
+            print("eorors alll the errors") 
             raise ApiKeyNotFoundException("open ai key not found")
+        
         if openai.api_key == None:
                 print("api not found")
                 raise ApiKeyNotFoundException
+            
+            
     def On_text_input_changed(self, text: str, event):
         print(type(self))
         if self.active_model == self.MODEL and not isinstance(event,GavinMarkI):

@@ -207,31 +207,37 @@ class ApiKeyForm(Form):
         subprocess.run(["setx", OPENAI_KEY_NAME,
                                 key])
         try:
+            #using regular env vars doesnt work because 
+            #dynamic instancing isn't a thing will move to 
+            #.evn var set up with permission only for this program
+            # and use  'keyring' for encryption of keys
              openai.api_key = os.getenv(OPENAI_KEY_NAME) 
-             print("key found")            
+             print(openai.api_key)
+             print("key found") 
+             self.label.setText("Api key recognized; loading program... ")             
+             QTimer.singleShot(3000, self.close)           
         except:
             self.label.setText("Please input your Api key")
-        
+            
  
-        try:
-            #------------------------------------------------------
-             openai.chat.completions.create( #type:ignore
-                                            model="gpt-3.5-turbo",
-                 messages=[{"role": "user", "content": "this is a test"}],
-                                            temperature=.45,  # .6
-                                            max_tokens=1000,  # max 4096
-                                            user="User")
-             #-----------------------------------------------------
-             print("runing with it")
+        # try:
+        #     #------------------------------------------------------
+        #      openai.chat.completions.create( #type:ignore
+        #                                     model="gpt-3.5-turbo",
+        #          messages=[{"role": "user", "content": "this is a test"}],
+        #                                     temperature=.45,  # .6
+        #                                     max_tokens=1000,  # max 4096
+        #                                     user="User")
+        #      #-----------------------------------------------------
+        #      print("runing with it")
             
              
-             self.label.setText("Api key recognized; loading program... ")             
-             QTimer.singleShot(3000, self.close)
+
              
              
-        except Exception as e: 
-            print(e)
-            self.label.setText("Api key not valid please input a valid Api key")
+        # except Exception as e: 
+        #     print(e)
+        #     self.label.setText("Api key not valid please input a valid Api key")
            
         
 
