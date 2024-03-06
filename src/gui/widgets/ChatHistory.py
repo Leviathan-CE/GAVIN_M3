@@ -96,9 +96,9 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
             from src.gui.widgets.MessageTypes import MessageWidget
             from src.data.DataBase import DataBase
             db = DataBase()
-            messages = db.get(num)
+            messages = db.get_last(num)
             for i in messages:
-                self.add_widget(MessageWidget(i[3], self))           
+                self.v_layout.insertWidget(0,MessageWidget(i[3], self),1)           
             db.close()
     
     def on_push_message(self, text: str, event):
