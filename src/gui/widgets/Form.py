@@ -191,32 +191,34 @@ class ApiKeyForm(Form):
         layout.setAlignment(self.ok_button,Qt.AlignmentFlag.AlignHCenter)
         
         self.setCenterWidget(center_widget)
-        self.closeEvent = self.on_close
         self.show()
         
-    def on_close(self, event):
-        print("starting program.")
-        self.main()
-        event.accept()
+
     
     def confirm_api_key(self):
+        from src.data.DataBase import KeyManager
+        apiManager = KeyManager()
         
         self.label.setText("setting key...")
         key = self.inputbar.toPlainText()
         self.inputbar.clear        
-        subprocess.run(["setx", OPENAI_KEY_NAME,
-                                key])
+        #subprocess.run(["setx", OPENAI_KEY_NAME,key])
+        apiManager.set_key(OPENAI_KEY_NAME,key)
         try:
             #using regular env vars doesnt work because 
             #dynamic instancing isn't a thing will move to 
             #.evn var set up with permission only for this program
             # and use  'keyring' for encryption of keys
-             openai.api_key = os.getenv(OPENAI_KEY_NAME) 
+
+             openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
+             apiManager.close()
              print(openai.api_key)
              print("key found") 
-             self.label.setText("Api key recognized; loading program... ")             
-             QTimer.singleShot(3000, self.close)           
-        except:
+             self.label.setText("Api key recognized; please restart program... ")             
+             QTimer.singleShot(5000, self.close)           
+        except Exception as e:
+            apiManager.close()
+            print(e)
             self.label.setText("Please input your Api key")
             
  

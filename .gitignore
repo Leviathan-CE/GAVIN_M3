@@ -1,3 +1,7 @@
+#keys and maangers
+config.ini
+Key_manager
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

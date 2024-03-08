@@ -35,6 +35,7 @@ if __name__ == "__main__":
                            EventHandlerPushMessages()]
 
     app = QApplication(sys.argv)
+
     
     def main():      
         llm_model = GavinMarkI()
@@ -68,11 +69,12 @@ if __name__ == "__main__":
         margins.layout().setAlignment(input_text_bar, Qt.AlignmentFlag.AlignHCenter)
         margins.layout().setAlignment(chat_scrol_view, Qt.AlignmentFlag.AlignHCenter)
 
-
         file = open(GUI_STYLES+"\\dark_mode.css", "r")
         app.setStyleSheet(file.read())
         file.close()
         app.exec()
+
+       
         
         
     try:
@@ -83,3 +85,5 @@ if __name__ == "__main__":
         app.setStyleSheet(file.read())
         file.close()
         app.exec()
+        
+

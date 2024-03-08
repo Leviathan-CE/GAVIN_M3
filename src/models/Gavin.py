@@ -36,9 +36,12 @@ class GavinMarkI(FoundationModel):
     def __init__(self):
         import openai
         import os
+        from src.data.DataBase import KeyManager
+        apiManager = KeyManager()
         super().__init__()
         try:
-             openai.api_key = os.getenv(OPENAI_KEY_NAME)
+             openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
+             apiManager.close()
              print(openai.api_key)
 
         except:
@@ -47,7 +50,7 @@ class GavinMarkI(FoundationModel):
         
         if openai.api_key == None:
                 print("api not found")
-                raise ApiKeyNotFoundException
+                raise ApiKeyNotFoundException("api key not found local restart program")
             
             
     def On_text_input_changed(self, text: str, event):
