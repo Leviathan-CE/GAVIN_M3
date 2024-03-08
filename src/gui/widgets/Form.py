@@ -219,31 +219,14 @@ class ApiKeyForm(Form):
                                             temperature=.45,  # .6
                                             max_tokens=1000,  # max 4096
                                             user="User")
-        #      #-----------------------------------------------------
-             apiManager.close()
-             print(openai.api_key)
+             #-----------------------------------------------------
+             apiManager.close()            
              print("key found") 
              self.label.setText("Api key recognized; please restart program... ")             
              QTimer.singleShot(5000, self.close)           
         except Exception as e:
             print(e)
             self.label.setText("Api key note recognized please enter valid key.")
-            
- 
-        # try:
-        #     #------------------------------------------------------
-        #      openai.chat.completions.create( #type:ignore
-        #                                     model="gpt-3.5-turbo",
-        #          messages=[{"role": "user", "content": "this is a test"}],
-        #                                     temperature=.45,  # .6
-        #                                     max_tokens=1000,  # max 4096
-        #                                     user="User")
-        #      #-----------------------------------------------------
-        #      print("runing with it")            
-        # except Exception as e: 
-        #     print(e)
-        #     self.label.setText("Api key not valid please input a valid Api key")
-           
         
 
             

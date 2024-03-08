@@ -116,8 +116,8 @@ class DataBase():
     
     def insert(self,user:str, message_content:str):        
         self._cursor.execute(f'''
-                             INSERT INTO messages (user,message) VALUES('{user}', "{message_content}");
-                             ''')
+                             INSERT INTO messages (user,message) VALUES(?,?);
+                             ''',(user,message_content,))
         self._connection.commit()
     def get_all(self) -> list:
          self._cursor.execute('''

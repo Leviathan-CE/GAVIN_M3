@@ -42,7 +42,6 @@ class GavinMarkI(FoundationModel):
         try:
              openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
              apiManager.close()
-             print(openai.api_key)
              openai.chat.completions.create( #type:ignore
                                             model="gpt-3.5-turbo",
                  messages=[{"role": "user", "content": "this is a test"}],
@@ -51,7 +50,7 @@ class GavinMarkI(FoundationModel):
                                             user="User")
 
         except:
-            print("eorors alll the errors") 
+            print("api error") 
             raise ApiKeyNotFoundException("open ai key not found")
         
         if openai.api_key == None:
