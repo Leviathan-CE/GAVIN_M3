@@ -211,15 +211,23 @@ class ApiKeyForm(Form):
             # and use  'keyring' for encryption of keys
 
              openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
+             print(openai.api_key)
+             # ------------------------------------------------------
+             openai.chat.completions.create( #type:ignore
+                                            model="gpt-3.5-turbo",
+                 messages=[{"role": "user", "content": "this is a test"}],
+                                            temperature=.45,  # .6
+                                            max_tokens=1000,  # max 4096
+                                            user="User")
+        #      #-----------------------------------------------------
              apiManager.close()
              print(openai.api_key)
              print("key found") 
              self.label.setText("Api key recognized; please restart program... ")             
              QTimer.singleShot(5000, self.close)           
         except Exception as e:
-            apiManager.close()
             print(e)
-            self.label.setText("Please input your Api key")
+            self.label.setText("Api key note recognized please enter valid key.")
             
  
         # try:
@@ -231,12 +239,7 @@ class ApiKeyForm(Form):
         #                                     max_tokens=1000,  # max 4096
         #                                     user="User")
         #      #-----------------------------------------------------
-        #      print("runing with it")
-            
-             
-
-             
-             
+        #      print("runing with it")            
         # except Exception as e: 
         #     print(e)
         #     self.label.setText("Api key not valid please input a valid Api key")

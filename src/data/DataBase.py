@@ -7,19 +7,18 @@ class KeyManager():
     def __init__(self) -> None:
         self._connection = None
         self._cursor = None          
-        self.create_database(name="Key_manager")
+        self.create_database()
     
-    def create_database(self, name: str):
+    def create_database(self):
         from src.data.Paths import DATA
         try:
-            self._connection = sqlite3.connect(f"{DATA}/{name}")
+            self._connection = sqlite3.connect(f"{DATA}/Key_manager")
             self._cursor = self._connection.cursor()
         except sqlite3.Error as e:
-            print(f"failed to connect to databse '{name}' : {e}")
+            print(f"failed to connect to databse 'Key_manager' : {e}")
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS api_keys(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            KeyName TEXT,            
+            KeyName TEXT PRIMARY KEY,            
             APIKey TEXT
         );''')
     
@@ -49,7 +48,7 @@ class KeyManager():
         self._cursor.execute(f'''
                              SELECT * FROM api_keys WHERE KeyName = ?
                              ''',(name,))
-        encrypted_key:str = self._cursor.fetchone()[2]       
+        encrypted_key:str = self._cursor.fetchone()[1]       
         decrypted_key = cipher.decrypt(encrypted_key.encode())
         return decrypted_key.decode()
 
@@ -80,7 +79,7 @@ class KeyManager():
         encrypted_key = encrypted_key.decode()
         
         self._cursor.execute(f'''
-                             INSERT INTO api_keys (KeyName,APIKey) VALUES('{name}', '{encrypted_key}');
+                             INSERT OR REPLACE INTO api_keys (KeyName,APIKey) VALUES("{name}", "{encrypted_key}");
                              ''')
         self._connection.commit()
     

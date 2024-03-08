@@ -43,6 +43,12 @@ class GavinMarkI(FoundationModel):
              openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
              apiManager.close()
              print(openai.api_key)
+             openai.chat.completions.create( #type:ignore
+                                            model="gpt-3.5-turbo",
+                 messages=[{"role": "user", "content": "this is a test"}],
+                                            temperature=.45,  # .6
+                                            max_tokens=1000,  # max 4096
+                                            user="User")
 
         except:
             print("eorors alll the errors") 
