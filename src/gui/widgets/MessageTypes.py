@@ -1,23 +1,36 @@
 
-from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QFrame, QSizePolicy, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, QSpacerItem
-from PyQt6.QtCore import QEvent, Qt, QSize
+from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QSizePolicy, QWidget,  QVBoxLayout, QApplication
+import datetime
 from src.gui.widgets import ChatHistory
+
+
+
 
 class MessageWidget(QWidget):
     """
     parses incoming data into markdown code and text blocks 
     then displays them using code and markdown latex widgets
     """
+
     
-    def __init__(self, message:str, chathist:ChatHistory.ViewPort):
+    def __init__(self, message:str, id:int, user:str, date:datetime.datetime = datetime.datetime.now(), chathist:ChatHistory.ViewPort = None):
         super().__init__()
+        
+        from src.gui.widgets.MenuBar import MessageHeader
         from src.gui.InputParser import get_text_blocks
         from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
+        
+        self.id = id
+        self.user = user
+        self.date = date
+        
         layout = QVBoxLayout()
         self.setLayout(layout)
         blocks:list[dict[str,str]] = get_text_blocks(message)
         #self.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.MinimumExpanding)
-        
+       
+        message_header = MessageHeader(self.user,self.date)
+        layout.addWidget(message_header)
         
         for blk in blocks:           
             if(blk is not None):

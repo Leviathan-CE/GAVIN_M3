@@ -5,8 +5,6 @@ containts base layout from
 from PyQt6.QtWidgets import (
     QWidget,
     QVBoxLayout,
-    QApplication,
-    QGridLayout,
     QScrollArea,
     QScrollBar,
     QSizePolicy,
@@ -54,7 +52,11 @@ class ScrollableWidget(QScrollArea):
         
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
+
+
+
 class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
+    
     '''
     chat history view port 
     '''
@@ -93,20 +95,24 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
         self.v_layout.addWidget(item, 1)
     
     def load_from_db(self, num:int):
-            from src.gui.widgets.MessageTypes import MessageWidget
             from src.data.DataBase import DataBase
+            from src.gui.widgets.MessageTypes import MessageWidget
             db = DataBase()
             messages = db.get_last(num)
             for i in messages:
-                self.v_layout.insertWidget(0,MessageWidget(i[3], self),1)           
+                self.v_layout.insertWidget(0,MessageWidget(i[3],i[0],i[1],i[2], self),1)           
             db.close()
     
     def on_push_message(self, text: str, event):
+        from src.data.DataBase import DataBase
         from src.gui.widgets.MessageTypes import MessageWidget
         from src.gui.widgets import TextInputBar
         from src.models.Gavin import FoundationModel
         if isinstance(event, FoundationModel) or isinstance(event, TextInputBar.TextInputBar):
-            Message = MessageWidget(text, self)
+            db = DataBase()
+            msg:tuple = db.get_last()[0]
+            db.close()           
+            Message = MessageWidget(msg[3], msg[0], msg[1], msg[2], self)
             self.add_widget(Message)    
     
     from src.data import WindowHints   

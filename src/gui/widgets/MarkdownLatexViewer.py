@@ -1,9 +1,9 @@
 from PyQt6.QtCore import QUrl, QSize, QMargins
-from PyQt6.QtGui import QKeyEvent, QMouseEvent
-from PyQt6.QtWidgets import QSizePolicy, QTextEdit, QVBoxLayout, QWidget, QLabel, QApplication, QMainWindow
+
+from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QWidget
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
-from PyQt6.QtCore import Qt
+
 from src.data.Paths import ROOT
 from src.gui.widgets import ChatHistory
 class MarkdownLatexViewer(QWidget):

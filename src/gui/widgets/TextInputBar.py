@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import  QSizePolicy, QApplication, QMainWindow, QVBoxLayout, QTextEdit, QWidget
-from PyQt6.QtGui import QTextCursor, QKeyEvent
-from PyQt6.QtCore import Qt, QEvent
+from PyQt6.QtWidgets import  QSizePolicy,  QTextEdit
+
+from PyQt6.QtCore import Qt
 from src.api.EventHandler import EvenHandlerInputText
 
 class TextInputBar(QTextEdit):
@@ -8,6 +8,8 @@ class TextInputBar(QTextEdit):
     """
         (width:int) sets the maxwidth of the bar
     """
+    from PyQt6.QtGui import QKeyEvent
+    
     def __init__(self, width:int = 400):
         super().__init__()
         
@@ -22,6 +24,8 @@ class TextInputBar(QTextEdit):
         self.textChanged.connect(self._updateTextEditHeight)
         
     def _updateTextEditHeight(self):
+        from PyQt6.QtGui import QTextCursor
+        
         # Adjust the height of QTextEdit based on the content
         cursor = self.textCursor()
         cursor.movePosition(QTextCursor.MoveOperation.End)

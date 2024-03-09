@@ -17,7 +17,7 @@ from PyQt6.QtCore import QEvent, QSize, Qt, QPoint, QPointF
 from PyQt6.QtGui import QIcon, QAction, QMouseEvent
 from src.data.Paths import GUI_IMGS
 from src.data import WindowHints
-
+import datetime
 
 
 class CodeBlockHeader(QFrame):
@@ -52,7 +52,34 @@ class CodeBlockHeader(QFrame):
         layout.addWidget(self.btn_clipboard)      
         self.show()
         
+class MessageHeader(QFrame):
+    
+    def __init__(self, user:str,date:datetime.datetime) -> None:
+        super().__init__()         
+        self.setMaximumHeight(36)
+        self.setContentsMargins(0,0,0,0)
+        self.setObjectName("message_header")   
         
+        
+        layout = QHBoxLayout()
+        self.setLayout(layout)
+        layout.setSpacing(0)
+        layout.setContentsMargins(0,0,0,0)
+        
+        text_user = QLabel(self)
+        text_user.setContentsMargins(15, 5, 5, 5)
+        text_user.setText(user)
+        
+        text_date = QLabel(self)
+        text_date.setContentsMargins(15, 5, 5, 5)
+        text_date.setText(date)
+        
+        spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        
+        layout.addWidget(text_user)
+        layout.addItem(spacer)
+        layout.addWidget(text_date)
+        self.show()
         
         
 

@@ -35,7 +35,6 @@ class GavinMarkI(FoundationModel):
     MODEL = "GAVIN_M1"
     def __init__(self):
         import openai
-        import os
         from src.data.DataBase import KeyManager
         apiManager = KeyManager()
         super().__init__()

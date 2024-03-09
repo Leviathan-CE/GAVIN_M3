@@ -37,7 +37,7 @@ class KeyManager():
                            encryption_key = '{Fernet.generate_key().decode()}'
                            ''')
                 # Set the file permissions to w/r for the owner
-                os.chmod(path, '0o600')
+                os.chmod(path, 0o600)
                 
         config = configparser.ConfigParser()
         config.read(path)
@@ -67,7 +67,7 @@ class KeyManager():
                            encryption_key = '{Fernet.generate_key().decode()}'
                            ''')
                 # Set the file permissions to w/r for the owner
-                os.chmod(path, '0o600')       
+                os.chmod(path, 0o600)       
         
         
         config = configparser.ConfigParser()
@@ -79,8 +79,8 @@ class KeyManager():
         encrypted_key = encrypted_key.decode()
         
         self._cursor.execute(f'''
-                             INSERT OR REPLACE INTO api_keys (KeyName,APIKey) VALUES("{name}", "{encrypted_key}");
-                             ''')
+                             INSERT OR REPLACE INTO api_keys (KeyName,APIKey) VALUES(?,?);
+                             ''', (name,encrypted_key,))
         self._connection.commit()
     
     def close(self):
@@ -90,7 +90,9 @@ class KeyManager():
 
     
 class DataBase():   
-    
+    '''
+    Chat history data managment
+    '''
  
     def __init__(self, name:str="Leviathan_local") -> None:  
         self._connection = None
@@ -125,16 +127,16 @@ class DataBase():
                              ''')
          return self._cursor.fetchall()
     
-    def get_last(self,num:int):
+    def get_last(self,num:int =1):
         self._cursor.execute(f'''
-                             SELECT * FROM messages ORDER by id DESC LIMIT {num};
-                             ''')
+                             SELECT * FROM messages ORDER by id DESC LIMIT ?;
+                             ''',(num,))
         return self._cursor.fetchall()
     
     def get(self, num:int):
         self._cursor.execute(f'''
-                             SELECT * FROM messages ORDER by id LIMIT {num};
-                             ''')
+                             SELECT * FROM messages ORDER by id LIMIT ?;
+                             ''',(num))
         return self._cursor.fetchall()
         
     def close(self):

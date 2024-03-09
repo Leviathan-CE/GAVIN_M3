@@ -9,21 +9,10 @@ from PyQt6.QtWidgets import (
     QSystemTrayIcon,
     QMenu
 )
-from PyQt6.QtCore import Qt
-
-from src.gui.widgets.Buttons import (
-    BTNExit,
-    BTNHide,
-    BTNMenu,
-    BTNMinMax
-    
-)
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWebEngineWidgets import QWebEngineView
-
 from src.gui.widgets.MenuBar import ToolBarHeader
 
-from src.data.Paths import GUI_IMGS           
+       
 
 # ---------------------------------------------
 # -------------BLANK Form----------------------
@@ -35,6 +24,15 @@ class Form(QWidget):
     
     def __init__(self):
         super().__init__()
+        from src.gui.widgets.Buttons import (
+            BTNExit,
+            BTNHide,
+            BTNMenu,
+            BTNMinMax
+
+        )
+        from src.data.Paths import GUI_IMGS
+        from PyQt6.QtCore import Qt
         #note always put classs vars in init or you get attribute error   
         self.outterLayout = QVBoxLayout(self)
         self.wdg_header = QWidget()
@@ -85,6 +83,7 @@ class Form(QWidget):
       
    
     def _set_header(self):
+        from PyQt6.QtCore import Qt
         self.outterLayout.setAlignment(Qt.AlignmentFlag.AlignTop)   
         self.outterLayout.setSpacing(10)
         self.outterLayout.setContentsMargins(0, 0,0, 0)    
@@ -106,6 +105,7 @@ class Form(QWidget):
          raise ReferenceError("use setCenterWidget instead")
         
     def _setup(self):
+        from PyQt6.QtCore import Qt
         
         self.outterLayout.setAlignment(Qt.AlignmentFlag.AlignTop)   
         self.outterLayout.setSpacing(10)
@@ -160,17 +160,17 @@ class TrayIcon(QSystemTrayIcon):
 # ---------------------------------------------
 # -------------API KEY Form--------------------
 # ---------------------------------------------
-from PyQt6.QtWidgets import QVBoxLayout, QTextEdit, QLabel
-from src.gui.widgets.Buttons import Button
-from PyQt6.QtCore import Qt,QTimer
-import subprocess
-from src.data.profiles import OPENAI_KEY_NAME
-import openai
-import os, time
+
+
 class ApiKeyForm(Form):
+    
     
     def __init__(self, function_main):
         super().__init__()
+        from PyQt6.QtWidgets import QVBoxLayout, QTextEdit, QLabel
+        from src.gui.widgets.Buttons import Button
+        from PyQt6.QtCore import Qt
+        
         self.main = function_main
         self.label = QLabel("Please input your OpenAI api key")
         self.inputbar = QTextEdit(self)
@@ -196,9 +196,12 @@ class ApiKeyForm(Form):
 
     
     def confirm_api_key(self):
+        from PyQt6.QtCore import Qt,QTimer
+        from src.data.profiles import OPENAI_KEY_NAME
+        import openai
         from src.data.DataBase import KeyManager
-        apiManager = KeyManager()
         
+        apiManager = KeyManager()        
         self.label.setText("setting key...")
         key = self.inputbar.toPlainText()
         self.inputbar.clear        
@@ -222,7 +225,7 @@ class ApiKeyForm(Form):
              #-----------------------------------------------------
              apiManager.close()            
              print("key found") 
-             self.label.setText("Api key recognized; please restart program... ")             
+             self.label.setText('''Api key recognized; your all set, program will automatically close in 3 seconds... ''')             
              QTimer.singleShot(5000, self.close)           
         except Exception as e:
             print(e)
