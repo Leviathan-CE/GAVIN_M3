@@ -89,7 +89,7 @@ class MarkdownLatexViewer(QWidget):
             self.webview.setMinimumHeight(size.height())
             print(f" new size: {self.webview.size()}")
             print(self.webview.sizeHint())
-            self.chat_hist.scroll_bottom()
+            
             #self.check_scrollbar()
             
     def check_scrollbar(self):

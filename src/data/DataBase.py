@@ -138,6 +138,12 @@ class DataBase():
                              SELECT * FROM messages ORDER by id LIMIT ?;
                              ''',(num))
         return self._cursor.fetchall()
+    
+    def get_last_from(self, start:int, num:int =1):
+        self._cursor.execute(f'''SELECT * FROM messages WHERE id < ? ORDER BY id DESC LIMIT ?;
+                            ''',(start,num,))
+        return self._cursor.fetchall()
+        
         
     def close(self):
         self._cursor.close()

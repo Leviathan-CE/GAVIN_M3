@@ -13,7 +13,7 @@ class MessageWidget(QWidget):
     """
 
     
-    def __init__(self, message:str, id:int, user:str, date:datetime.datetime = datetime.datetime.now(), chathist:ChatHistory.ViewPort = None):
+    def __init__(self, message:str, id:int, user:str, date:datetime.datetime = datetime.datetime.now(), chathist:ChatHistory.ViewPort = None, scrol_bot:bool = True):
         super().__init__()
         
         from src.gui.widgets.MenuBar import MessageHeader
@@ -38,6 +38,8 @@ class MessageWidget(QWidget):
                     layout.addWidget(CodeBlock(blk['content']))
                 if blk['type'] == "text":
                     layout.addWidget(MarkdownLatexViewer(blk['content'], chathist))
+        if chathist != None and scrol_bot == True:
+            chathist.scroll_bottom()
 
     
 

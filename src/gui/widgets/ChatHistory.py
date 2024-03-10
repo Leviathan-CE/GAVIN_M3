@@ -22,6 +22,7 @@ class ScrollableWidget(QScrollArea):
         
         self.v_layout = QVBoxLayout()
         self.scrollbar = QScrollBar()
+        self.scrollbar.setRange(0,100)
         self._wdg = QWidget()  # base
         self._setup(width, height)
         self.show()
@@ -68,9 +69,34 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
         self.setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.setSizePolicy(QSizePolicy.Policy.Expanding,
                            QSizePolicy.Policy.Expanding)
+        self.scrollbar.valueChanged.connect(self.on_scroll_top_add_messages)
+    
+    def on_scroll_top_add_messages(self, valueRange):
+        
+        from src.data.DataBase import DataBase
+        from src.gui.widgets.MessageTypes import MessageWidget
+        last_index = 1
+        if valueRange == 0:
+            
+            item = self.v_layout.itemAt(0)
+            if isinstance(item.widget(), MessageWidget):
+                message:MessageWidget = item.widget()
+                last_index = message.id
+                if last_index != 1:
+                    db = DataBase()
+                    messages = db.get_last_from(start=last_index, num=6)
+                    for i in messages:
+                        self.v_layout.insertWidget(0,MessageWidget(i[3],i[0],i[1],i[2], self, False),1)           
+                        if i[0] == 1:
+                            break
+                    self.scrollbar.setValue(int(self.scrollbar.maximum()/3))
+                    db.close()
+        
+            
+            
         
     def scroll_bottom(self):
-        self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())
+        self.scrollbar.setValue(self.scrollbar.maximum())
         print("scroll to bottom")
 
     def clear_all(self):
@@ -93,6 +119,7 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
         add a new item to the history
         '''
         self.v_layout.addWidget(item, 1)
+       
     
     def load_from_db(self, num:int):
             from src.data.DataBase import DataBase
