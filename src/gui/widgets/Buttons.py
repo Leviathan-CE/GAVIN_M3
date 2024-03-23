@@ -79,7 +79,7 @@ class BTNMenu(Button):
 
     def __init__(self, id: str = "", size=BUTTON_DEFAULT_SIZE):
         super().__init__(id, size)
-        self._img = QIcon(GUI_IMGS+"\\logo-WT.png")
+        self._img = QIcon(GUI_IMGS+"/logo-WT.png")
         self.setIconSize(QSize(size[0], size[1]))
         self.setIcon(self._img)
         self.setText("")
@@ -98,7 +98,7 @@ class BTNClipboardCopy(Button):
     def __init__(self, id: str = "", size=BUTTON_DEFAULT_SIZE):
         super().__init__(id, size)
         from PyQt6.QtGui import QPixmap
-        pixmap = QPixmap(GUI_IMGS+"\\clipboard-icon.png")
+        pixmap = QPixmap(GUI_IMGS+"/clipboard-icon.png")
         self.setContentsMargins(10,10,10,10)
         scaled_img = pixmap.scaled(15,15)
         self._img = QIcon(scaled_img)

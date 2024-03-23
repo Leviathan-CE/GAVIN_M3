@@ -52,7 +52,7 @@ class Form(QWidget):
         self.setMinimumHeight(250)
         self.setMinimumWidth(350)
 
-        icon = QIcon(GUI_IMGS + "\\icon.png")
+        icon = QIcon(GUI_IMGS + "/icon.png")
         if icon.isNull():
             print("icon is null")
         # Replace with the path to your icon

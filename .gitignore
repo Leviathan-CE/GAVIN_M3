@@ -2,6 +2,10 @@
 config.ini
 Key_manager
 
+#mac
+.DS_Stores
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

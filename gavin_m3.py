@@ -7,7 +7,7 @@ try:
         QWidget
 
     )   
-    from src.data.Paths import GUI_STYLES
+    from src.data.Paths import GUI_STYLES, ROOT
     import sys
 
     from src.models.Gavin import  GavinMarkI
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         margins.layout().setAlignment(input_text_bar, Qt.AlignmentFlag.AlignHCenter)
         margins.layout().setAlignment(chat_scrol_view, Qt.AlignmentFlag.AlignHCenter)
        
-        file = open(GUI_STYLES+"\\dark_mode.css", "r")
+        file = open(GUI_STYLES+"/dark_mode.css", "r")
         app.setStyleSheet(file.read())
         file.close()
         app.exec()
@@ -94,14 +94,14 @@ if __name__ == "__main__":
             main()
         except ApiKeyNotFoundException:
                 api_form = ApiKeyForm(main)
-                file = open(GUI_STYLES+"\\dark_mode.css", "r")
+                file = open(GUI_STYLES+"/dark_mode.css", "r")
                 app.setStyleSheet(file.read())
                 file.close()
                 app.exec()
     except Exception as e:
             import traceback
              # Log the exception details to a file or print them
-            with open("{ROOT}/error_log.txt", "w") as f:
+            with open(f"{ROOT}/error_log.txt", "w") as f:
                 traceback.print_exc(file=f)
             # Print the exception details to the console
             traceback.print_exc()

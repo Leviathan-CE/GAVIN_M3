@@ -90,7 +90,7 @@ class ToolBarHeader(QToolBar):
     '''
     def __init__(self):
         super().__init__() 
-        
+        self.setObjectName("tool_header")
        
              
         self.setIconSize(QSize(48,48))
@@ -114,7 +114,7 @@ class ToolBarHeader(QToolBar):
         #print("relased") 
         #do nothing 
         
-        delta : QPointF  = event.globalPosition() - self.drag_start_position # type: ignore
+        delta : QPointF  = event.globalPosition() - self.drag_start_position 
         new_delta = QPoint(self.window().pos().x()+int(delta.x()),self.window().pos().y()+int(delta.y()))       
         # print(event.pos().y())
         # print(new_delta)
@@ -172,7 +172,7 @@ class StartMenu(QMenu):
         super().__init__()
        
         file_menu = self.addMenu("&")
-        file_menu.setIcon(QIcon(GUI_IMGS+"\\logo-WT.png"))
+        file_menu.setIcon(QIcon(GUI_IMGS+"/logo-WT.png"))
         dir = file_menu.window
         # Create actions and add to the menu
         new_action = QAction("New", self)
