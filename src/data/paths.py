@@ -34,7 +34,12 @@ print(sys.path)
 
 # note ROOT should always be 'some path\GAVIN\src'
 ROOT:str = os.path.abspath('src').replace("\\","/")
-print(ROOT)
+#ROOT:str = os.path.dirname(__file__)
+
+# Combine the script directory with 'src'
+#src_dir = os.path.join(ROOT, 'src')
+print(f"{ROOT} : root")
+
 
 DATA:str = f"{ROOT}/data"
 

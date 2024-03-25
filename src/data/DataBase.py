@@ -12,15 +12,18 @@ class KeyManager():
     def create_database(self):
         from src.data.Paths import DATA
         try:
-            self._connection = sqlite3.connect(f"{DATA}/Key_manager")
+            print(DATA)
+            self._connection = sqlite3.connect(f"{DATA}/Key_manager.db")
             self._cursor = self._connection.cursor()
+
+            self._cursor.execute('''CREATE TABLE IF NOT EXISTS api_keys(
+            KeyName TEXT PRIMARY KEY,            
+            APIKey TEXT
+            );''')
         except sqlite3.Error as e:
             print(f"failed to connect to databse 'Key_manager' : {e}")
 
-        self._cursor.execute('''CREATE TABLE IF NOT EXISTS api_keys(
-            KeyName TEXT PRIMARY KEY,            
-            APIKey TEXT
-        );''')
+        
     
     def get_key(self, name:str) -> str:
         import configparser
@@ -94,14 +97,14 @@ class DataBase():
     Chat history data managment
     '''
  
-    def __init__(self, name:str="Leviathan_local") -> None:  
+    def __init__(self, name:str="Leviathan_local.db") -> None:  
         self._connection = None
         self._cursor = None          
         self.create_database(name=name)
         self._message_count= len(self.get_all())
 
 
-    def create_database(self,name: str = "Leviathan_local"):
+    def create_database(self,name: str = "Leviathan_local.db"):
         from src.data.Paths import DATA
         try:
             self._connection = sqlite3.connect(f"{DATA}/{name}")
