@@ -26,7 +26,7 @@ try:
 except Exception as e:
             import traceback
              # Log the exception details to a file or print them
-            with open(f"{ROOT}error_log.txt", "w") as f:
+            with open(f"{ROOT}/error_log.txt", "w") as f:
                 traceback.print_exc(file=f)
             # Print the exception details to the console
             traceback.print_exc()
