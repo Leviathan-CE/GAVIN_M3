@@ -5,6 +5,7 @@ locations and imports
 
 import os
 import platform
+
 # NOTE: only runnable code must be places in the root GAVIN
 # and all imports should start with src, turn avoid import errors
 # as imports are relitive and thus the exicution location matters
@@ -30,7 +31,6 @@ import platform
 '''
 ROOT
 '''
-import sys
 #print(sys.path)
 #print(f"cdw_path : {os.getcwd()}")
 print(f"os.path : {os.path.abspath(os.path.dirname(__file__))}")
@@ -42,16 +42,7 @@ MAIN_DIR:str = "Gavin_MK3"
 print(os_name)
 # note ROOT should always be 'some path\GAVIN_verionsnumber\src' for mac 
 ROOT:str = os.path.abspath("src").replace("\\","/")
-match os_name:
-    
-    case "Darwin":
-         ROOT = os.path.abspath(f"src").replace("\\","/")
-    case "Windows":
-        ROOT = os.path.abspath('src').replace("\\","/")
-    case "Linux":
-        ROOT = "NOT-IMPLEMENTED"
-    case _:
-        ROOT = "NOT-VALID-PATH"
+
 
 
 # Combine the script directory with 'src'

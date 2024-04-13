@@ -13,12 +13,12 @@ class MessageWidget(QWidget):
     """
 
     
-    def __init__(self, message:str, id:int, user:str, date:datetime.datetime = datetime.datetime.now(), chathist:ChatHistory.ViewPort = None, scrol_bot:bool = True):
+    def __init__(self, message:str, id:int, user:str, date:datetime.datetime = datetime.datetime.now(), chathist:ChatHistory.ViewPort = None, scrol_bot:bool = True): # type: ignore
         super().__init__()
         
         from src.gui.widgets.MenuBar import MessageHeader
         from src.gui.InputParser import get_text_blocks
-        from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
+        from src.gui.widgets.MarkdownLatexViewer import MardownLatexWidget
         
         self.id = id
         self.user = user
@@ -37,7 +37,7 @@ class MessageWidget(QWidget):
                 if blk['type'] == "code":
                     layout.addWidget(CodeBlock(blk['content']))
                 if blk['type'] == "text":
-                    layout.addWidget(MarkdownLatexViewer(blk['content'], chathist))
+                    layout.addWidget(MardownLatexWidget(blk['content'], chathist))
         if chathist != None and scrol_bot == True:
             chathist.scroll_bottom()
 
@@ -58,7 +58,7 @@ class CodeBlock(QWidget):
         
         code_header = CodeBlockHeader(code.split()[0].strip("```"))
         code_header.btn_clipboard.clicked.connect(self.copy_to_clipboard)
-        html_content = mistune.markdown(code)
+        html_content: str = mistune.markdown(code)
 
         self.code_string = QTextEdit(html_content)        
         self.code_string.setReadOnly(True)
@@ -70,8 +70,8 @@ class CodeBlock(QWidget):
         main_layout.addWidget(self.code_string)
 
         #set size of code block for my sanity no touchy
-        char = self.code_string.document().characterCount()
-        blk = self.code_string.document().blockCount()        
+        char = self.code_string.document().characterCount() #type:ignore
+        blk = self.code_string.document().blockCount()  #type:ignore      
         doc_height =  max(max(blk*12+150,float.__round__(char*.5)), blk*10+float.__round__(char*.3) )
         self.setMinimumHeight(doc_height)        
    
@@ -87,6 +87,6 @@ class CodeBlock(QWidget):
         mimdat = QMimeData()
         mimdat.setText(self.code_string.toPlainText())
         clipboard = QApplication.clipboard()
-        clipboard.setMimeData(mimdat,mode=QClipboard.Mode.Clipboard)
+        clipboard.setMimeData(mimdat,mode=QClipboard.Mode.Clipboard)#type:ignore
 
         

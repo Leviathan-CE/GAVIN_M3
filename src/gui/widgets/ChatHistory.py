@@ -3,6 +3,7 @@ containts base layout from
 '''
 
 from PyQt6.QtWidgets import (
+    QLayoutItem,
     QWidget,
     QVBoxLayout,
     QScrollArea,
@@ -105,8 +106,8 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
         '''
         print(self.v_layout.count())
         while self.v_layout.count():
-            item = self.v_layout.takeAt(0)
-            widget = item.widget()
+            item: QLayoutItem | None = self.v_layout.takeAt(0)
+            widget: QWidget | None = item.widget()
             if widget is not None:
                 widget.deleteLater()
             else:
@@ -143,7 +144,7 @@ class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
             self.add_widget(Message)    
     
     from src.data import WindowHints   
-    def on_window_resize(self, hint: WindowHints, event):
+    def on_window_resize(self, hint: WindowHints, event): # type: ignore
         if hint == WindowHints.TO_MINIMIZED:
             print("minimized")
         if hint == WindowHints.TO_MAXIMIZIED:

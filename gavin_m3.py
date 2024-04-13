@@ -17,7 +17,7 @@ try:
             EventHandlerPushMessages,
             EventHandlerWindowSize
         )
-    from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer
+    from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer,MardownLatexWidget
     from src.gui.widgets.ChatHistory import ViewPort      
     from src.gui.widgets.TextInputBar import TextInputBar
     from PyQt6.QtCore import Qt
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
             # for what ever reason if vewier is not populated
             # then wierd minimize glitch occurs.
-        empty_message = MarkdownLatexViewer(
+        empty_message = MardownLatexWidget(
                 "", chat_scrol_view)
         empty_message.setMaximumHeight(0)
         chat_scrol_view.add_widget(empty_message)

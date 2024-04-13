@@ -3,9 +3,12 @@ from PyQt6.QtCore import QUrl, QSize, QMargins
 from PyQt6.QtWidgets import QTextEdit, QVBoxLayout, QWidget
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 import mistune
+from mistune.plugins.math import math
+
 
 from src.data.Paths import ROOT
 from src.gui.widgets import ChatHistory
+
 class MarkdownLatexViewer(QWidget):
     """_summary_
     a html formatter that extends markdown thats avaible to pyqt6
@@ -27,16 +30,16 @@ class MarkdownLatexViewer(QWidget):
 
         # self.setMaximumWidth(MAX_VIEW_WIDTH)
         # self.webview.setMaximumWidth(MAX_VIEW_WIDTH)
-        self.webview.page().loadFinished.connect(self.on_load_finished)
+        self.webview.page().loadFinished.connect(self.on_load_finished) #type:ignore
         html_content = mistune.markdown(markdown_content.replace("\f", "\\f"))
-
+       
      
         # self.webview.setSizePolicy(QSizePolicy.Policy.Expanding,
         #                     QSizePolicy.Policy.Expanding)
         # Add MathJax script to the HTML content for LaTeX rendering
         # local mathjax (not working..yet) path {ROOT}\\js\\mathjax\\2.7.7\\MathJax.js?config=TeX-AMS_HTML
         # web mathjax https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML
-        html_with_mathjax = f"""
+        html_with_mathjax:str = f"""
  <html>
         <head>
         
@@ -52,8 +55,8 @@ class MarkdownLatexViewer(QWidget):
     </script> 
         <script type="text/x-mathjax-config">
         MathJax.Hub.Config({{ tex2jax: {{
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                inlineMath: [['$', '$'], ['\\(',\\)']],
+                displayMath: [['$$', '$$'],['\\[','\\]']],
                 processEscapes: true
             }}
         }});       
@@ -64,18 +67,14 @@ class MarkdownLatexViewer(QWidget):
         </head>
         <body>
         <div>
-        {fr"{html_content}"}
+        {html_content[0]}
         </div>
         </body>
         </html>
         """
-
-        #chaning baseurl allows images to render but not latex        
-        base_url = QUrl.fromLocalFile(ROOT)
-        # print(base_url)
         # Set the HTML content to the web engine view
-        self.webview.setHtml(html_with_mathjax)       
-      
+        self.webview.setHtml(html_with_mathjax)  
+       
         # Set the web engine view as the central widget
         layout.addWidget(self.webview) 
         
@@ -84,7 +83,7 @@ class MarkdownLatexViewer(QWidget):
     def on_load_finished(self, ok):
         # Adjust the minimum size based on the content size
         if ok:            
-            size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,70))
+            size = QSize(self.webview.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,70)) #type: ignore
             self.setMinimumHeight(size.height())            
             self.webview.setMinimumHeight(size.height())
             print(f" new size: {self.webview.size()}")
@@ -97,7 +96,7 @@ class MarkdownLatexViewer(QWidget):
         better size for widget not yet working
         '''
         # Get the current scroll position and content size
-        contents_size = self.webview.page().contentsSize().height().__round__()
+        contents_size = self.webview.page().contentsSize().height().__round__() #type: ignore
         widget_h = self.height()
         print(f"web: {contents_size} widg: {widget_h}")
         hight: int = widget_h- contents_size
@@ -128,11 +127,74 @@ class MarkdownLatexViewer(QWidget):
         #     print(f"after: web: {contents_size} widg: {widget_h}")
 
 
-class MarddownLatexViewer2(QTextEdit):
+class MardownLatexWidget(QWidget):
     '''
     supose to replace v1 so that we can scroll and still 
     copy paste text without issue and to be slightly faster 
     to render and possibly allow to continual rendering.
     '''
-    def __init__(self, html_file:str):
-        super().__init__()
+    def __init__(self, text:str, chathist:ChatHistory.ViewPort|None = None):
+        super().__init__(chathist)
+        layout = QVBoxLayout()
+        layout.setContentsMargins(15, 15, 15, 15)
+        self.setLayout(layout)
+        self.setMinimumHeight(50) 
+        self.chat_hist: ChatHistory.ViewPort|None = chathist
+
+        renderer = mistune.HTMLRenderer()
+        markdown = mistune.Markdown(renderer, plugins=[math])
+        text =text.replace('\\[','/[')
+        text = text.replace('\\]','/]')
+        text =text.replace('\\(','/(')
+        text = text.replace('\\)','/)')
+        text = text.replace('\\\\','\\\\\\\\')
+        html_content:str = markdown.parse(text)[0] # type: ignore
+       
+        html_with_mathjax:str = f"""
+ <html>
+        <head>
+        
+        <meta charset="utf-8">       
+       <base href="{ROOT}">
+                  <script>
+        document.addEventListener("DOMContentLoaded", function() {{
+          
+            var style = document.createElement('style');
+            style.innerHTML = 'body {{ background-color: rgb(20, 20,20); color: white; }}';
+            document.head.appendChild(style);
+        }});
+    </script> 
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({{ tex2jax: {{
+                inlineMath: [['$', '$'], ['/(','/)']],
+                displayMath: [['$$', '$$'],['/[','/]']],
+                processEscapes: true
+            }}
+        }});       
+        </script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>       
+
+        </head>
+        <body>
+        <div>
+        {html_content}
+        </div>
+        </body>
+        </html>
+        """
+        self.webengine = QWebEngineView(chathist)
+        self.webengine.setHtml(html_with_mathjax) # type: ignore
+        self.webengine.page().loadFinished.connect(self.on_load_finished) #type: ignore
+        layout.addWidget(self.webengine)
+        
+
+
+    def on_load_finished(self, ok):
+        # Adjust the minimum size based on the content size
+        if ok:            
+            size: QSize = QSize(self.webengine.page().contentsSize().toSize()).grownBy(QMargins(0,0,0,70)) #type: ignore
+            self.setMinimumHeight(size.height())            
+            self.setMinimumHeight(size.height())
+            # print(f" new size: {self.size()}")
+            # print(self.sizeHint())
