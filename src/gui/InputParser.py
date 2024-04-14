@@ -5,14 +5,13 @@ functions for parsing text into persepctive blocks of organized text while perse
 def get_text_blocks(text:str ) -> list[dict[str, str]]:
         '''
         parses the text into dict reprasentation for text and code
-        then prints to console
         '''
         code_blocks: list = _parse_text(text=text)
         dicts_txt_blocks: list = []
         if len(code_blocks) != 0:
 
             prev_end = 0
-            for block in code_blocks:
+            for block in code_blocks: 
                 start, end = block
                 if start > prev_end:
                     # Add a text block if there's text before the code block

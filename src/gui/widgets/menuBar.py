@@ -21,6 +21,9 @@ import datetime
 
 
 class CodeBlockHeader(QFrame):
+    '''
+    the bar atop a code block which shows the langauge and the copy clipboard button
+    '''
     
     def __init__(self, code_type:str):
         super().__init__()
@@ -53,7 +56,9 @@ class CodeBlockHeader(QFrame):
         self.show()
         
 class MessageHeader(QFrame):
-    
+    '''
+    the header above the message displaying who made the message and the date and time.
+    '''
     def __init__(self, user:str,date:datetime.datetime) -> None:
         super().__init__()         
         self.setMaximumHeight(36)

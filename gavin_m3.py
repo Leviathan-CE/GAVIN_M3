@@ -1,3 +1,8 @@
+'''
+Main execuatable entry point for application. 
+'''
+from io import TextIOWrapper
+
 
 try:
     
@@ -17,7 +22,7 @@ try:
             EventHandlerPushMessages,
             EventHandlerWindowSize
         )
-    from src.gui.widgets.MarkdownLatexViewer import MarkdownLatexViewer,MardownLatexWidget
+    from src.gui.widgets.MarkdownLatexViewer import MardownLatexWidget
     from src.gui.widgets.ChatHistory import ViewPort      
     from src.gui.widgets.TextInputBar import TextInputBar
     from PyQt6.QtCore import Qt
@@ -45,8 +50,12 @@ if __name__ == "__main__":
 
 
     
-    def main(): 
-
+    def main() -> None: 
+        '''
+        the main function entry point. all singleton instances 
+        are located here. all essentail components are instanced within this
+        function. 
+        '''
         
         
         llm_model = GavinMarkI()
@@ -65,9 +74,8 @@ if __name__ == "__main__":
 
 
             # for what ever reason if vewier is not populated
-            # then wierd minimize glitch occurs.
-        empty_message = MardownLatexWidget(
-                "", chat_scrol_view)
+            # then wierd minimize glitch occurs. why? still unknown
+        empty_message = MardownLatexWidget("", chat_scrol_view)
         empty_message.setMaximumHeight(0)
         chat_scrol_view.add_widget(empty_message)
         margins.setContentsMargins(10,0,10,10)
@@ -80,7 +88,7 @@ if __name__ == "__main__":
         margins.layout().setAlignment(input_text_bar, Qt.AlignmentFlag.AlignHCenter)
         margins.layout().setAlignment(chat_scrol_view, Qt.AlignmentFlag.AlignHCenter)
        
-        file = open(GUI_STYLES+"/dark_mode.css", "r")
+        file: TextIOWrapper = open(GUI_STYLES+"/dark_mode.css", "r")
         app.setStyleSheet(file.read())
         file.close()
         app.exec()
@@ -91,6 +99,12 @@ if __name__ == "__main__":
         
     try:    
         try:   
+            '''
+            if main runs a APiNotFoundException the api keyform will display
+            this is caused if the base model can not grab the key from encryption database
+            iether when the config file is missing or if a test messge is sent to the openai 
+            api and throws a error for not recognizing the api key.
+            '''
             main()
         except ApiKeyNotFoundException:
                 api_form = ApiKeyForm(main)

@@ -19,7 +19,7 @@ from src.gui.widgets.MenuBar import ToolBarHeader
 # ---------------------------------------------
 class Form(QWidget):
     '''
-    blank window
+    blank window, does nto use OS defaults
     '''
     
     def __init__(self):
@@ -164,7 +164,6 @@ class TrayIcon(QSystemTrayIcon):
 
 class ApiKeyForm(Form):
     
-    
     def __init__(self, function_main):
         super().__init__()
         from PyQt6.QtWidgets import QVBoxLayout, QTextEdit, QLabel
@@ -209,7 +208,7 @@ class ApiKeyForm(Form):
         apiManager.set_key(OPENAI_KEY_NAME,key)
         try:
             #using regular env vars doesnt work because 
-            #dynamic instancing isn't a thing will move to 
+            #dynamic instancing isn't a thing aparently will move to 
             #.evn var set up with permission only for this program
             # and use  'keyring' for encryption of keys
 

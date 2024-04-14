@@ -17,6 +17,10 @@ from src.api.EventHandler import OnPushMessageToDisplay, EventHandlerPushMessage
 
 
 class ScrollableWidget(QScrollArea):
+    '''
+    custom scroll wheel. eventaully should hook up to Qwebengines and allow
+    events from the Qwebengine to also happen here to allow for scrolling
+    '''
 
     def __init__(self, width: int, height: int):
         super().__init__()
@@ -60,7 +64,11 @@ class ScrollableWidget(QScrollArea):
 class ViewPort(ScrollableWidget, OnPushMessageToDisplay, OnWindowResized ):
     
     '''
-    chat history view port 
+    chat history view port
+
+    all chat messages are added threw here. 
+    its hooked to the local chat history database and messages are added threw 
+    observer pattern.
     '''
 
     def __init__(self, width: int, height: int):

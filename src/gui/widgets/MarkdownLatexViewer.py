@@ -8,11 +8,12 @@ from mistune.plugins.math import math
 
 from src.data.Paths import ROOT
 from src.gui.widgets import ChatHistory
-
-class MarkdownLatexViewer(QWidget):
+@DeprecationWarning
+class MarkdownLatexViewer(QWidget): 
     """_summary_
     a html formatter that extends markdown thats avaible to pyqt6
-    to allow for $$ latex maths inline and reg expressions.
+    to allow for $$ latex maths inline and reg expressions. in markdown using mistune
+    and compatable with pyqt6.
     
     """
     def __init__(self, markdown_content:str, chathist:ChatHistory.ViewPort):
@@ -129,9 +130,7 @@ class MarkdownLatexViewer(QWidget):
 
 class MardownLatexWidget(QWidget):
     '''
-    supose to replace v1 so that we can scroll and still 
-    copy paste text without issue and to be slightly faster 
-    to render and possibly allow to continual rendering.
+    updated markdown latex Renderer. 
     '''
     def __init__(self, text:str, chathist:ChatHistory.ViewPort|None = None):
         super().__init__(chathist)

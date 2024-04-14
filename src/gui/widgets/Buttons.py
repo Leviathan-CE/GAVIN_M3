@@ -12,7 +12,7 @@ from src.api.EventHandler import EventHandlerWindowSize, OnWindowResized
 from src.data import WindowHints
 
 
-BUTTON_DEFAULT_SIZE = [48, 48]
+BUTTON_DEFAULT_SIZE: list[int] = [48, 48]
 
 
 class Button(QPushButton):

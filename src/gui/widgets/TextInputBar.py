@@ -1,16 +1,19 @@
+from PyQt6.QtGui import QTextCursor
 from PyQt6.QtWidgets import  QSizePolicy,  QTextEdit
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QRect, Qt
 from src.api.EventHandler import EvenHandlerInputText
 
 class TextInputBar(QTextEdit):
   
     """
+    the main user input for the chating with the agent.
+    also has same rendering as the agent.
         (width:int) sets the maxwidth of the bar
     """
     from PyQt6.QtGui import QKeyEvent
     
-    def __init__(self, width:int = 400):
+    def __init__(self, width:int = 400) -> None:
         super().__init__()
         
         self.evenhandler = EvenHandlerInputText()
@@ -23,18 +26,18 @@ class TextInputBar(QTextEdit):
         self.setPlaceholderText("Enter prompt here... cntrl+enter to send")
         self.textChanged.connect(self._updateTextEditHeight)
         
-    def _updateTextEditHeight(self):
+    def _updateTextEditHeight(self) -> None:
         from PyQt6.QtGui import QTextCursor
         
         # Adjust the height of QTextEdit based on the content
-        cursor = self.textCursor()
+        cursor: QTextCursor = self.textCursor()
         cursor.movePosition(QTextCursor.MoveOperation.End)
-        rect = self.cursorRect(cursor)
+        rect: QRect = self.cursorRect(cursor)
         if 3 <= rect.y() <= 300:
             self.setFixedHeight(rect.bottom() + 10)
     
 
-    def keyPressEvent(self, event:QKeyEvent):
+    def keyPressEvent(self, event:QKeyEvent) -> None:
         event_control:Qt.Key = None
         if event.keyCombination().keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
             event_control = event

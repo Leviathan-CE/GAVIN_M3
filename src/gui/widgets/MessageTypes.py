@@ -20,9 +20,9 @@ class MessageWidget(QWidget):
         from src.gui.InputParser import get_text_blocks
         from src.gui.widgets.MarkdownLatexViewer import MardownLatexWidget
         
-        self.id = id
-        self.user = user
-        self.date = date
+        self.id: int = id
+        self.user: str = user
+        self.date: datetime.datetime = date
         
         layout = QVBoxLayout()
         self.setLayout(layout)
