@@ -36,12 +36,21 @@ ROOT
 print(f"os.path : {os.path.abspath(os.path.dirname(__file__))}")
 
 
-os_name = platform.system()
+os_name: str = platform.system()
 MAIN_DIR:str = "Gavin_MK3"
+
+print(os.path.abspath("src").find("GAVIN_M3"))
+
+def setabs(system:str) -> str:
+    if system == "Darwin" and os.path.abspath("src").find("GAVIN_M3") == -1:
+        return os.path.abspath(f"{MAIN_DIR}/src").replace("\\","/")
+    return os.path.abspath("src").replace("\\","/")
+
 
 print(os_name)
 # note ROOT should always be 'some path\GAVIN_verionsnumber\src' for mac 
-ROOT:str = os.path.abspath("src").replace("\\","/")
+ROOT:str = setabs(os_name)
+
 
 
 

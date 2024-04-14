@@ -148,7 +148,7 @@ class ToolBarHeader(QToolBar):
                 # TODO: need tyo make work with multiple screens
                 #self.window().move(int(event.globalPosition().x()/2)+event.pos().x(), int(event.globalPosition().y()))
                 self.window().move(QPoint(int(event.pos().x()/2), event.pos().y()))
-                self.drag_start_position = event.globalPosition()
+                self.drag_start_position: QPointF = event.globalPosition()
                 event.accept()
                 return          
 
