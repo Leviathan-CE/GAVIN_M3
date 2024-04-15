@@ -204,7 +204,6 @@ class ApiKeyForm(Form):
         self.label.setText("setting key...")
         key = self.inputbar.toPlainText()
         self.inputbar.clear        
-        #subprocess.run(["setx", OPENAI_KEY_NAME,key])
         apiManager.set_key(OPENAI_KEY_NAME,key)
         try:
             #using regular env vars doesnt work because 
@@ -212,8 +211,7 @@ class ApiKeyForm(Form):
             #.evn var set up with permission only for this program
             # and use  'keyring' for encryption of keys
 
-             openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)
-             print(openai.api_key)
+             openai.api_key = apiManager.get_key(OPENAI_KEY_NAME)             
              # ------------------------------------------------------
              openai.chat.completions.create( #type:ignore
                                             model="gpt-3.5-turbo",
