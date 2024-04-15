@@ -29,7 +29,9 @@ try:
     from PyQt6.QtWidgets import QVBoxLayout
     from src.api.Exceptions import ApiKeyNotFoundException
 except Exception as e:
+            from src.data.Paths import ROOT
             import traceback
+            import sys
              # Log the exception details to a file or print them
             with open(f"{ROOT}/error_log.txt", "w") as f:
                 traceback.print_exc(file=f)
@@ -113,7 +115,9 @@ if __name__ == "__main__":
                 file.close()
                 app.exec()
     except Exception as e:
+            from src.data.Paths import ROOT
             import traceback
+            import sys
              # Log the exception details to a file or print them
             with open(f"{ROOT}/error_log.txt", "w") as f:
                 traceback.print_exc(file=f)

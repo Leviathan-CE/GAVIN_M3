@@ -1,6 +1,7 @@
 #keys and maangers
 config.ini
 Key_manager
+Key_manager.db
 
 #mac
 .DS_Stores

@@ -1,10 +1,6 @@
 Traceback (most recent call last):
-  File "/Users/LeviM/Desktop/Files/Dev/Projects/GAVIN_M3/gavin_m3.py", line 94, in <module>
-    main()
-  File "/Users/LeviM/Desktop/Files/Dev/Projects/GAVIN_M3/gavin_m3.py", line 69, in main
-    empty_message = MarkdownLatexViewer(
-                    ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/LeviM/Desktop/Files/Dev/Projects/GAVIN_M3/src/gui/widgets/MarkdownLatexViewer.py", line 70, in __init__
-    {html_content[0]}
-     ~~~~~~~~~~~~^^^
-IndexError: string index out of range
+  File "c:\Users\Levi\Desktop\GAVIN_M3\gavin_m3.py", line 9, in <module>
+    from src.gui.widgets.Form import Form, ApiKeyForm
+  File "c:\Users\Levi\Desktop\GAVIN_M3\src\gui\widgets\Form.py", line 13, in <module>
+    from src.gui.widgets.MenuBar import ToolBarHeader
+ModuleNotFoundError: No module named 'src.gui.widgets.MenuBar'

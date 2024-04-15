@@ -224,11 +224,11 @@ class ApiKeyForm(Form):
              #-----------------------------------------------------
              apiManager.close()            
              print("key found") 
-             self.label.setText('''Api key recognized; your all set, program will automatically close in 3 seconds... ''')             
+             self.label.setText('''Api key recognized; your all set,\n program will automatically close in 3 seconds... ''')             
              QTimer.singleShot(5000, self.close)           
         except Exception as e:
             print(e)
-            self.label.setText("Api key note recognized please enter valid key.")
+            self.label.setText("Api key not recognized please enter valid key.")
         
 
             
